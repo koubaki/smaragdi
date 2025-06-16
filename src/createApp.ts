@@ -1,13 +1,7 @@
-const createApp = (environment: boolean) => {
-  const express = require('express')
-  const app = express()
+import express, { Application } from 'express'
 
-  if (environment) {
-    app.use(express.json())
-    app.use(express.urlencoded({ extended: true }))
-  }
-
-  return app
+const createApp = (prod: boolean): Application => {
+  return express()
 }
 
 export default createApp

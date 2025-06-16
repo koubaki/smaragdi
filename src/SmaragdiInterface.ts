@@ -1,7 +1,7 @@
 import { Express, Application } from 'express'
 
 interface SmaragdiInterface extends Express {
-  createApp: (environment: boolean) => Application
+  createApp: (prod: boolean) => Application
 }
 
 export default SmaragdiInterface
