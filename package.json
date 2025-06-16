@@ -1,0 +1,19 @@
+{
+  "name": "smaragdi",
+  "version": "0.0.0",
+  "description": "A wrapper around Express that adds important features.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koubaki/smaragdi.git"
+  },
+  "author": "koubaki",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/koubaki/smaragdi/issues"
+  },
+  "homepage": "https://github.com/koubaki/smaragdi#readme"
+}
