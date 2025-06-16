@@ -1,4 +1,5 @@
 import readline from 'readline'
+import { join } from 'path'
 
 import Smaragdi from '../dist/index.js'
 
@@ -14,9 +15,6 @@ rl.question('Assuming you have built the project, would you like to continue? (y
   if (answer.trim().toLowerCase() === 'y') {
     // Create the app
     const app = Smaragdi.createApp('test')
-
-    // Set up static files
-    app.static()
 
     // Set up a simple route
     app.get('/', (req, res) => res.send('<h1>Welcome to the Test Server</h1>'))

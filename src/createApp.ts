@@ -1,4 +1,4 @@
-import { normalize, join } from 'path'
+import { normalize } from 'path'
 
 import express, { Application as ExpressApplication, json, static as staticServer } from 'express'
 import cookieParser from 'cookie-parser'
@@ -63,11 +63,6 @@ const createApp = (env?: Environment): Application => {
 
     next()
   })
-
-  // Opinionated static files middleware generator
-  app.static = (dir: string = join(import.meta.dirname, 'public')): void => {
-    app.use(staticServer(dir, { index: false }))
-  }
 
   return app
 }
