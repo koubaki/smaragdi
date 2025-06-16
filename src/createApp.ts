@@ -1,6 +1,6 @@
-import path from 'path'
+import { normalize, join } from 'path'
 
-import express, { Application as ExpressApplication, json } from 'express'
+import express, { Application as ExpressApplication, json, static as staticServer } from 'express'
 import cookieParser from 'cookie-parser'
 
 // Extend Request interface for middleware
@@ -32,11 +32,11 @@ const createApp = (env?: Environment): Application => {
     req.unNormalizedOriginalUrl = req.originalUrl
 
     // Normalize URL
-    req.url = path.normalize(req.url).replace(/\\/g, '/').replace(/\/$/, '')
+    req.url = normalize(req.url).replace(/\\/g, '/').replace(/\/$/, '')
     if (req.url === '') req.url = '/'
 
     // Normalize original URL
-    req.originalUrl = path.normalize(req.originalUrl).replace(/\\/g, '/').replace(/\/$/, '')
+    req.originalUrl = normalize(req.originalUrl).replace(/\\/g, '/').replace(/\/$/, '')
     if (req.originalUrl === '') req.originalUrl = '/'
 
     next()
@@ -62,6 +62,11 @@ const createApp = (env?: Environment): Application => {
     res.setHeader('X-Powered-By', 'Smaragdi')
     next()
   })
+
+  // Opinionated static files middleware generator
+  app.static = (dir: string = join(import.meta.dirname, 'public')): void => {
+    app.use(staticServer(dir, { index: false }))
+  }
 
   return app
 }
