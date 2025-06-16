@@ -4,7 +4,7 @@
   "description": "A wrapper around Express that adds important features.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc",
     "test": "node test/index.js"
   },
   "repository": {
@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/koubaki/smaragdi#readme",
   "dependencies": {
-    "tsc": "^2.0.4"
+    "express": "^5.1.0",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3"
   }
 }

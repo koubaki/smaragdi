@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": false,
     "target": "esnext",
-    "module": "commonjs",
+    "module": "esnext",
+    "moduleResolution": "node",
     "rootDir": "./src",
     "outDir": "./dist",
     "strict": true,
