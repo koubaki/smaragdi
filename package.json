@@ -2,9 +2,10 @@
   "name": "smaragdi",
   "version": "0.0.0",
   "description": "A wrapper around Express that adds important features.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "node ./test/index.js"
+    "build": "tsc -p tsconfig.json",
+    "test": "node test/index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/koubaki/smaragdi/issues"
   },
-  "homepage": "https://github.com/koubaki/smaragdi#readme"
+  "homepage": "https://github.com/koubaki/smaragdi#readme",
+  "dependencies": {
+    "tsc": "^2.0.4"
+  }
 }
