@@ -1,5 +1,10 @@
-import { Express, Application } from 'express'
+import { Express } from 'express'
 
-interface Interface extends Express {}
+import Environment from './Environtment'
+
+// Interface for the base
+interface Interface extends Express {
+  createApp: (env?: Environment) => Express
+}
 
 export default Interface
