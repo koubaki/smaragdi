@@ -1,23 +1,35 @@
-import { readFileSync } from 'fs'
+import readline from 'readline'
 
-import { createApp } from '../dist/index.js'
+import Smaragdi from '../dist/index.js'
 
-// Ask question
-console.log('Assuming you have built the project, would you like to continue? (y/n)')
+// Create a readline interface
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+})
 
-// Observe answer
-if (readFileSync(0, 'utf-8').trim() === 'y') {
-  // Create the app
-  const app = createApp('test')
+// Prompt the user
+rl.question('Assuming you have built the project, would you like to continue? (y/n)\n', (answer) => {
+  // Observe the answer
+  if (answer.trim().toLowerCase() === 'y') {
+    // Create the app
+    const app = Smaragdi.createApp('test')
 
-  // Set up static files
-  app.staticServer()
+    // Set up static files
+    app.static()
 
-  // Start the server
-  app.start(3000, () => {
-    console.log('Test server is running on http://localhost:3000')
-  })
-} else {
-  // Exit the process
-  process.exit(1)
-}
+    // Set up a simple route
+    app.get('/', (req, res) => res.send('<h1>Welcome to the Test Server</h1>'))
+
+    // Start the server
+    app.listen(3000, () => {
+      console.log('Test server is running on http://localhost:3000')
+    })
+  } else {
+    // Exit the process
+    process.exit(1)
+  }
+
+  // Close the readline interface
+  rl.close()
+})

@@ -1,6 +1,6 @@
 import { Express } from 'express'
 
-import Environment from './Environtment'
+import Environment from './Environment.js'
 
 // Interface for the base
 interface Interface extends Express {

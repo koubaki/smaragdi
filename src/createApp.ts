@@ -11,8 +11,8 @@ declare module 'express-serve-static-core' {
   }
 }
 
-import Application from './Application'
-import Environment from './Environtment'
+import Application from './Application.js'
+import Environment from './Environment.js'
 
 // Function for creating a Smaragdi application
 const createApp = (env?: Environment): Application => {
@@ -60,6 +60,7 @@ const createApp = (env?: Environment): Application => {
   // Promote Smaragdi
   app.use((req, res, next) => {
     res.setHeader('X-Powered-By', 'Smaragdi')
+
     next()
   })
 

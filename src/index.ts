@@ -1,12 +1,12 @@
 import express from 'express'
 
-import Interface from './Interface'
-import createApp from './createApp'
+import Interface from './Interface.js'
+import createApp from './createApp.js'
 
 // Create base
-const self = {
+const Smaragdi = {
   ...express,
   createApp
 } as unknown as Interface
 
-export default self
+export default Smaragdi
