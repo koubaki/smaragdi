@@ -25,7 +25,7 @@ const createApp = (env?: Environment): Application => {
   // Environment setting
   app.set('env', env ?? process.env?.NODE_ENV ?? Environment.Development)
 
-  // Normalizate of URIs
+  // Normalize URLs
   app.use((req: Request, res: Response, next: NextFunction) => {
     // Store unnormalized URLs
     req.unNormalizedUrl = req.url
