@@ -1,7 +1,10 @@
 import { normalize } from 'path'
 
-import express, { Application as ExpressApplication, json, static as staticServer } from 'express'
+import express, { Application as ExpressApplication, json, Request, Response, NextFunction } from 'express'
 import cookieParser from 'cookie-parser'
+
+import Application from './Application.js'
+import Environment from './Environment.js'
 
 // Extend Request interface for middleware
 declare module 'express-serve-static-core' {
@@ -10,9 +13,6 @@ declare module 'express-serve-static-core' {
     unNormalizedOriginalUrl?: string
   }
 }
-
-import Application from './Application.js'
-import Environment from './Environment.js'
 
 // Function for creating a Smaragdi application
 const createApp = (env?: Environment): Application => {
@@ -26,7 +26,7 @@ const createApp = (env?: Environment): Application => {
   app.set('env', env ?? process.env?.NODE_ENV ?? Environment.Development)
 
   // Normalizate of URIs
-  app.use((req, res, next) => {
+  app.use((req: Request, res: Response, next: NextFunction) => {
     // Store unnormalized URLs
     req.unNormalizedUrl = req.url
     req.unNormalizedOriginalUrl = req.originalUrl
@@ -52,13 +52,13 @@ const createApp = (env?: Environment): Application => {
   }
 
   // JSON middleware
-  app.use((req, res, next) => app.jsonMiddleware(req, res, next))
+  app.use((req: Request, res: Response, next: NextFunction) => app.jsonMiddleware(req, res, next))
 
   // Cookie parser middleware
   app.use(cookieParser())
 
   // Promote Smaragdi
-  app.use((req, res, next) => {
+  app.use((req: Request, res: Response, next: NextFunction) => {
     res.setHeader('X-Powered-By', 'Smaragdi')
 
     next()
