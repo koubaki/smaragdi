@@ -1,6 +1,6 @@
 {
   "name": "smaragdi",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "description": "A wrapper around Express that adds important features.",
   "main": "dist/index.js",
@@ -19,11 +19,23 @@
   },
   "homepage": "https://github.com/koubaki/smaragdi#readme",
   "dependencies": {
+    "@babel/core": "^7.27.4",
+    "@babel/preset-env": "^7.27.2",
+    "@babel/preset-react": "^7.27.1",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^16.0.1",
     "cookie-parser": "^1.4.7",
     "express": "^5.1.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-streaming": "^0.4.2",
+    "rollup": "^4.43.0",
     "typescript": "^5.8.3"
   },
   "devDependencies": {
-    "@types/cookie-parser": "^1.4.9"
+    "@types/cookie-parser": "^1.4.9",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6"
   }
 }

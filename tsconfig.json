@@ -5,6 +5,7 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
+    "jsx": "react-jsx",
     "rootDir": "./src",
     "outDir": "./dist",
     "strict": true,

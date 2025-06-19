@@ -1,10 +1,12 @@
 import { normalize } from 'path'
 
 import express, { Application as ExpressApplication, json, Request, Response, NextFunction } from 'express'
+import { ComponentType } from 'react'
 import cookieParser from 'cookie-parser'
 
 import Application from './Application.js'
 import Environment from './Environment.js'
+import ssr from './ssr.js'
 
 // Extend Request interface for middleware
 declare module 'express-serve-static-core' {
@@ -63,6 +65,11 @@ const createApp = (env?: Environment): Application => {
 
     next()
   })
+
+  // React SSR
+  app.ssr = (jsx: ComponentType | (() => Promise<ComponentType>), context: Record<string, any>, bundle: string, id: string): void => {
+    app.all(/.*/, (req, res) => ssr(jsx, context, bundle, id, req, res))
+  }
 
   return app
 }
