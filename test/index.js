@@ -1,8 +1,6 @@
 import readline from 'readline'
 import { join } from 'path'
 
-import Smaragdi from '../dist/index.js'
-
 // Create a readline interface
 const rl = readline.createInterface({
   input: process.stdin,
@@ -13,6 +11,9 @@ const rl = readline.createInterface({
 rl.question('Assuming you have built the project, would you like to continue? (y/n)\n', async (answer) => {
   // Observe the answer
   if (answer.trim().toLowerCase() === 'y') {
+    // Import Smaragdi
+    const Smaragdi = import('../dist')
+
     // Create a bundle
     const bundle = await Smaragdi.reactBundleServer(join(import.meta.dirname, 'App.jsx'), join(import.meta.dirname, 'bundle.js'))
 

@@ -26,29 +26,39 @@ const ssr = async (jsx: ComponentType | (() => Promise<ComponentType>), context:
     { userAgent: req.get('User-Agent') }
   )
 
-  // Render a template based on the context
+  // Start the wrapper of the head
   res.write(`<!DOCTYPE ${contextValue?.head?.doctype ?? 'html'}><html${contextValue?.head?.htmlProps ? ' ' + Object.entries(contextValue.head.htmlProps).map(([key, value]) => `${(key as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}="${(value as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}"`).join(' ') : ' lang="en"'}><head${contextValue?.head?.headProps ? ' ' + Object.entries(contextValue.head.headProps).map(([key, value]) => `${(key as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}="${(value as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}"`).join(' ') : ''}>`)
 
+  // Render the head
   await ((await renderToStream(contextValue?.head?.headContents ? contextValue.head.headContents : <title>Smaragdi Application</title>, { userAgent: req.get('User-Agent') })) as any).pipe(res)
 
+  // Render the server's optional data payload
   if (contextValue?.head?.payload) {
     res.write(`<script type="application/json" id="server-payload">${contextValue?.head?.payload ? contextValue.head.payload.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;') : ''}</script>`)
   }
 
+  // End the wrapper of the head
   res.write(`</head><body${contextValue?.head?.bodyProps ? ' ' + Object.entries(contextValue.head.bodyProps).map(([key, value]) => `${(key as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}="${(value as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}"`).join(' ') : ''}>`)
 
+  // Add a noscript element
   if (contextValue?.head?.noScript) {
+    // Start the wrapper of the noscript element
     res.write(`<noscript${ contextValue?.head?.noScriptProps ? ' ' + Object.entries(contextValue.head.noScriptProps).map(([key, value]) => `${(key as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}="${(value as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}"`).join(' ') : ''}>`)
 
+    // Render the noscript element
     await ((await renderToStream(contextValue.head.noScript, { userAgent: req.get('User-Agent') })) as any).pipe(res)
 
+    // End the wrapper of the noscript element
     res.write('</noscript>')
   }
 
+  // Start the wrapper of the app
   res.write(`<div${id ? ` id="${id.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}"` : ''}>`)
 
+  // Render the app
   await result.pipe(res)
 
+  // End the wrapper of the app
   res.write(`</div>${bundle ? `<script src="${bundle.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}></script>"` : ''}</body></html>`)
 }
 

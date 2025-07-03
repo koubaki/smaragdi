@@ -1,5 +1,5 @@
 import { createContext } from 'react'
 
-const Context: object = createContext({})
+const Context: Record<string, any> = createContext({})
 
 export default Context

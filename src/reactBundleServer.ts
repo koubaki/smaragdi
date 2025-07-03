@@ -1,23 +1,23 @@
 import { pathToFileURL } from 'url'
 import { normalize } from 'path'
 
-import { watch, OutputOptions, RollupOptions } from 'rollup'
-import babel from '@rollup/plugin-babel'
+import { watch, OutputOptions, RollupOptions, InputPluginOption } from 'rollup'
 import commonjs from '@rollup/plugin-commonjs'
+import babel from '@rollup/plugin-babel'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import { ComponentType } from 'react'
 
 // Creates a bundle for React SSR in real-time
-const reactBundleServer = async (input: string, output: string, babelOptions?: object): Promise<() => Promise<ComponentType>> => {
+const reactBundleServer = async (input: string, output: string, plugins?: InputPluginOption): Promise<() => Promise<ComponentType>> => {
   // Rollup configuration for bundling React SSR code
   const config: RollupOptions = {
     input,
-    plugins: [
+    plugins: plugins ?? [
       commonjs(),
       nodeResolve({
         preferBuiltins: true,
       }),
-      babel(babelOptions ?? {
+      babel({
         babelHelpers: 'bundled',
         exclude: 'node_modules/**',
         presets: [
