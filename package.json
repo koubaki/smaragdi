@@ -1,6 +1,6 @@
 {
   "name": "smaragdi",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "type": "module",
   "description": "A wrapper around Express that adds important features.",
   "main": "dist/index.js",
@@ -37,7 +37,6 @@
   "devDependencies": {
     "@types/cookie-parser": "^1.4.9",
     "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "typescript": "^5.8.3"
+    "@types/react-dom": "^19.1.6"
   }
 }

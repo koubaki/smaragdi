@@ -4,8 +4,10 @@ import useRouterContext from './useRouterContext.js'
 
 /**
  * Anchors for Smaragdi router
- * @param {{ to: string, [key: string]: ReactNode }}
- * @returns {ReactElement}
+ * @param {Object} props - The React props
+ * @param {string} props.to - Shorthand for `href`
+ * @param {Object} props.rest - The rest of the props
+ * @returns {ReactElement} The result
  */
 const Link = ({ to, ...rest }: { to: string, [key: string]: ReactNode }): ReactElement => {
   // Use the context

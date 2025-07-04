@@ -1,4 +1,4 @@
-import { ReactNode, useState, ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
 
 import Context from './Context.js'
 import ContextInterface from './ContextInterface.js'
@@ -6,10 +6,12 @@ import StateInterface from './StateInterface.js'
 
 /**
  * Router wrapper for Smaragdi
- * @param {{ [uri]: string, children: ReactNode | ReactNode[] }}
- * @returns {ReactElement}
+ * @param {Object} props - The React props
+ * @param {string} [props.uri] - The default URI that should be used
+ * @param {ReactElement | ReactElement[]} props.children - The children
+ * @returns {ReactElement} The children wrapped in a context
  */
-const Router = ({ uri, children }: { uri?: string, children: ReactNode | ReactNode[] }): ReactElement => {
+const Router = ({ uri, children }: { uri?: string, children: ReactElement | ReactElement[] }): ReactElement => {
   // Set the initial URI
   if (typeof window !== 'undefined' && typeof uri === 'undefined') uri = location.pathname
 

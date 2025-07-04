@@ -6,7 +6,7 @@ import Context from './Context.js'
 
 /**
  * Wrapper to access the router context for Smaragdi router
- * @returns {ContextInterface | StateInterface}
+ * @returns {ContextInterface | StateInterface} The context used by Smaragdi router
  */
 const useRouterContext = (): ContextInterface | StateInterface => useContext(Context)
 

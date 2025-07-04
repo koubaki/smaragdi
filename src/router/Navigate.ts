@@ -2,8 +2,8 @@ import useRouterContext from './useRouterContext.js'
 
 /**
  * Redirector for Smaragdi router
- * @param {{ to: string }}
- * @returns {null}
+ * @param {Object} props - The React props
+ * @param {String} props.to - The destination
  */
 const Navigate = ({ to }: { to: string }): null => {
   // Prevent usage from the server

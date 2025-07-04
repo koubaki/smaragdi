@@ -1,11 +1,13 @@
 import { Path } from 'path-to-regexp'
-import { ReactNode } from 'react'
+import { ReactElement } from 'react'
 
 /**
  * Declarative Route wrapper for Smaragdi router; does nothing on its own
- * @param {{ path: Path, children: ReactNode | ReactNode[] }}
- * @returns {ReactNode | ReactNode[]}
+ * @param {Object} props - The React props
+ * @param {Path} props.path - The route's `path-to-regexp` pattern
+ * @param {ReactElement | ReactElement[]} props.path - What the component must show if matched and rendered
+ * @returns {ReactElement | ReactElement[]}
  */
-const Route = ({ path, children }: { path: Path, children: ReactNode | ReactNode[] }): ReactNode | ReactNode[] => children
+const Route = ({ path, children }: { path: Path, children: ReactElement | ReactElement[] }): ReactElement | ReactElement[] => children
 
 export default Route

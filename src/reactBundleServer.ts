@@ -9,10 +9,10 @@ import { ComponentType } from 'react'
 
 /**
  * Creates a bundle for React SSR in real-time
- * @param {string} input
- * @param {string} output
- * @param {InputPluginOption} [plugins]
- * @returns {Promise<{ (): Promise<ComponentType>, bundle: boolean }>}
+ * @param {string} input - Points to the entry point of the app
+ * @param {string} output - Points to the exit point of the app
+ * @param {InputPluginOption} [plugins] - Custom Rollup plugin options
+ * @returns {Promise<Function>} A function that provides the latest bundle
  */
 const reactBundleServer = async (input: string, output: string, plugins?: InputPluginOption): Promise<{ (): Promise<ComponentType>, bundle: boolean }> => {
   // Rollup configuration for bundling React SSR code

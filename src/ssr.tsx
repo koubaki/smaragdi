@@ -7,13 +7,12 @@ import Context from './Context.js'
 /**
  * Private function for SSR
  * @private
- * @param {ComponentType | { (): Promise<ComponentType>, bundle: boolean }} jsx
- * @param {Record<string, any>} context
- * @param {string} bundle
- * @param {string} id
- * @param {Request} req
- * @param {Response} res
- * @returns {Promise<void>}
+ * @param {ComponentType | { (): Promise<ComponentType>, bundle: boolean }} jsx - The app's JSX or a function that provides it
+ * @param {Record<string, any>} context - The default context of the app
+ * @param {string} bundle - The location of the CSR bundle (empty string means no CSR)
+ * @param {string} id - The ID of the app's container
+ * @param {Request} req - The current connection's request object
+ * @param {Response} res - The current connection's request object
  */
 const ssr = async (jsx: ComponentType | { (): Promise<ComponentType>, bundle: boolean }, context: Record<string, any>, bundle: string, id: string, req: Request, res: Response): Promise<void> => {
   // Create a context value

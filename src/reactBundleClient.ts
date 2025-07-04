@@ -1,22 +1,19 @@
-import { pathToFileURL } from 'url'
-import { join, normalize } from 'path'
+import { join } from 'path'
 import { writeFile } from 'fs/promises'
 
 import { watch, OutputOptions, RollupOptions, InputPluginOption } from 'rollup'
 import commonjs from '@rollup/plugin-commonjs'
 import babel from '@rollup/plugin-babel'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
-import { ComponentType } from 'react'
 
 /**
  * Creates a bundle for React CSR in real-time
- * @param {string} entry
- * @param {string} input
- * @param {string} output
- * @param {InputPluginOption} [plugins]
- * @param {string} id
- * @param {boolean} ssr
- * @returns {Promise<void>}
+ * @param {string} entry - Points to the location of the file that should do CSR
+ * @param {string} input - Points to the entry point of the app
+ * @param {string} output - Points to the exit point of the app
+ * @param {InputPluginOption} [plugins] - Custom Rollup plugin options
+ * @param {string} id - The ID of the app's container
+ * @param {boolean} ssr - Whether SSR is done or not
  */
 const reactBundleClient = async (entry: string, input: string, output: string, id: string, ssr: boolean, plugins?: InputPluginOption): Promise<void> => {
   // Write the entry
@@ -26,13 +23,13 @@ import { normalize } from 'path'
 
 import ${ssr ? `{ hydrateRoot } from 'react'` : `{ createRoot } from 'react'`}
 
-import App from './${input}'
+import App from ${JSON.stringify('./' + input)}
 
-${ssr ? `hydrateRoot(document.querySelector('${id}'))` : `createRoot(document.querySelector('${id}')).render()`}`)
+${ssr ? `hydrateRoot(document.querySelector(${JSON.stringify(id)}))` : `createRoot(document.querySelector('${JSON.stringify(id)}')).render()`}`)
 
   // Rollup configuration for bundling React CSR code
   const config: RollupOptions = {
-    input,
+    input: entry,
     plugins: plugins ?? [
       commonjs(),
       nodeResolve({

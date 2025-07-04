@@ -18,8 +18,8 @@ declare module 'express-serve-static-core' {
 
 /**
  * Function for creating a Smaragdi application
- * @param {Environment} [env]
- * @returns {Application}
+ * @param {Environment} [env] - The environment where Smaragdi is being used
+ * @returns {Application} The Smaragdi app created
  */
 const createApp = (env?: Environment): Application => {
   // Express base
@@ -54,7 +54,7 @@ const createApp = (env?: Environment): Application => {
 
   /**
    * Configuration for JSON middleware
-   * @param {object} options
+   * @param {object} options - The JSON middleware options
    */
   app.json = (options: object): void => {
     app.jsonMiddleware = json(options)
@@ -75,10 +75,10 @@ const createApp = (env?: Environment): Application => {
 
   /**
    * React SSR
-   * @param {ComponentType | { (): Promise<ComponentType>, bundle: boolean }} jsx
-   * @param {Record<string, any>} context
-   * @param {string} bundle
-   * @param {string} id
+   * @param {ComponentType} jsx - The app's JSX or a function that provides it
+   * @param {Record<string, any>} context - The default context of the app
+   * @param {string} bundle - The location of the CSR bundle (empty string means no CSR)
+   * @param {string} id - The ID of the app's container
    */
   app.ssr = (jsx: ComponentType | { (): Promise<ComponentType>, bundle: boolean }, context: Record<string, any>, bundle: string, id: string): void => {
     app.all(/.*/, (req, res) => ssr(jsx, context, bundle, id, req, res))
