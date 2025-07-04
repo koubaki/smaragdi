@@ -4,7 +4,11 @@ import { match } from 'path-to-regexp'
 import Route from './Route.js'
 import useRouterContext from './useRouterContext.js'
 
-// Router logic for Smaragdi router
+/**
+ * Router logic for Smaragdi router
+ * @param {ReactElement<typeof Route> | ReactElement[]} children
+ * @returns {ReactNode | ReactNode[]}
+ */
 const useRouter = (children: ReactElement<typeof Route> | ReactElement[]): ReactNode | ReactNode[] => {
   // Use the context
   const routes = useRouterContext()

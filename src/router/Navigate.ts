@@ -1,7 +1,11 @@
 import useRouterContext from './useRouterContext.js'
 
-// Redirector for Smaragdi router
-const Navigate = ({ to }: { to: string }) => {
+/**
+ * Redirector for Smaragdi router
+ * @param {{ to: string }}
+ * @returns {null}
+ */
+const Navigate = ({ to }: { to: string }): null => {
   // Prevent usage from the server
   if (window === undefined) throw new Error('Navigate can only be used on the client.')
 

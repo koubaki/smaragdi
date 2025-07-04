@@ -1,9 +1,13 @@
-import { createElement } from 'react'
+import { createElement, ReactNode, ReactElement } from 'react'
 
 import useRouterContext from './useRouterContext.js'
 
-// Anchors for Smaragdi router
-const Link = ({ to, ...rest }: { to: string }) => {
+/**
+ * Anchors for Smaragdi router
+ * @param {{ to: string, [key: string]: ReactNode }}
+ * @returns {ReactElement}
+ */
+const Link = ({ to, ...rest }: { to: string, [key: string]: ReactNode }): ReactElement => {
   // Use the context
   const context = useRouterContext()
 

@@ -4,8 +4,18 @@ import { renderToStream } from 'react-streaming/server'
 
 import Context from './Context.js'
 
-// Function for SSR
-const ssr = async (jsx: ComponentType | (() => Promise<ComponentType>), context: Record<string, any>, bundle: string, id: string, req: Request, res: Response): Promise<void> => {
+/**
+ * Private function for SSR
+ * @private
+ * @param {ComponentType | { (): Promise<ComponentType>, bundle: boolean }} jsx
+ * @param {Record<string, any>} context
+ * @param {string} bundle
+ * @param {string} id
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<void>}
+ */
+const ssr = async (jsx: ComponentType | { (): Promise<ComponentType>, bundle: boolean }, context: Record<string, any>, bundle: string, id: string, req: Request, res: Response): Promise<void> => {
   // Create a context value
   const contextValue: Record<string, any> = { req, res, ...context }
 
@@ -13,7 +23,7 @@ const ssr = async (jsx: ComponentType | (() => Promise<ComponentType>), context:
   const Provider = (Context as React.Context<any>).Provider
 
   // @ts-expect-error Create a JSX component
-  const Component = jsx instanceof Function ? await jsx() : jsx
+  const Component = typeof jsx?.bundle !== 'undefined' && jsx?.bundle ? await jsx() : jsx
 
   // Create a JSX element
   const Jsx = <Component />

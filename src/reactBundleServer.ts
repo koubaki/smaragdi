@@ -7,8 +7,14 @@ import babel from '@rollup/plugin-babel'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import { ComponentType } from 'react'
 
-// Creates a bundle for React SSR in real-time
-const reactBundleServer = async (input: string, output: string, plugins?: InputPluginOption): Promise<() => Promise<ComponentType>> => {
+/**
+ * Creates a bundle for React SSR in real-time
+ * @param {string} input
+ * @param {string} output
+ * @param {InputPluginOption} [plugins]
+ * @returns {Promise<{ (): Promise<ComponentType>, bundle: boolean }>}
+ */
+const reactBundleServer = async (input: string, output: string, plugins?: InputPluginOption): Promise<{ (): Promise<ComponentType>, bundle: boolean }> => {
   // Rollup configuration for bundling React SSR code
   const config: RollupOptions = {
     input,
@@ -63,6 +69,9 @@ const reactBundleServer = async (input: string, output: string, plugins?: InputP
 
   // Create a function that returns the latest bundle export
   const bundle = async (): Promise<ComponentType> => module
+
+  // Add a property that marks it as a bundle provider
+  bundle.bundle = true
 
   return bundle
 }
