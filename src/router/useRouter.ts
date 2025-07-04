@@ -4,6 +4,9 @@ import { match } from 'path-to-regexp'
 import Route from './Route.js'
 import useRouterContext from './useRouterContext.js'
 
+// Import the path normalizer
+const { normalize } = await import(typeof window === 'undefined' ? 'path' : 'path-browserify')
+
 /**
  * Router logic for Smaragdi router
  * @param {ReactElement<typeof Route> | ReactElement[]} children
@@ -19,7 +22,7 @@ const useRouter = (children: ReactElement<typeof Route> | ReactElement[]): React
   // Loop through the routes
   if (children instanceof Array) for (const child of children) {
     // @ts-expect-error Match the route
-    const matched = matcher(routes?.uri ?? routes?.state?.uri)
+    const matched = matcher(normalize(routes?.uri ?? routes?.state?.uri).replace('\\', '/').replace(/\/$/, ''))
 
     // Check if the route is matched
     if (matched) {
@@ -32,7 +35,7 @@ const useRouter = (children: ReactElement<typeof Route> | ReactElement[]): React
   }
 
   // @ts-expect-error Create a function to match the routes
-  const matched = matcher(routes?.uri ?? routes?.state?.uri)
+  const matched = matcher(normalize(routes?.uri ?? routes?.state?.uri).replace('\\', '/').replace(/\/$/, ''))
 
   // Check if the route is matched
   if (matched) {

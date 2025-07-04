@@ -2,12 +2,14 @@ import express from 'express'
 
 import createApp from './createApp.js'
 import reactBundleServer from './reactBundleServer.js'
+import reactBundleClient from './reactBundleClient.js'
 
 // Create base
 const Smaragdi = {
   ...express,
   createApp,
-  reactBundleServer
+  reactBundleServer,
+  reactBundleClient
 }
 
 export { createApp, reactBundleServer }

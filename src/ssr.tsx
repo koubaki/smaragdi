@@ -53,7 +53,7 @@ const ssr = async (jsx: ComponentType | { (): Promise<ComponentType>, bundle: bo
   // Add a noscript element
   if (contextValue?.head?.noScript) {
     // Start the wrapper of the noscript element
-    res.write(`<noscript${ contextValue?.head?.noScriptProps ? ' ' + Object.entries(contextValue.head.noScriptProps).map(([key, value]) => `${(key as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}="${(value as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}"`).join(' ') : ''}>`)
+    res.write(`<noscript${contextValue?.head?.noScriptProps ? ' ' + Object.entries(contextValue.head.noScriptProps).map(([key, value]) => `${(key as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}="${(value as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}"`).join(' ') : ''}>`)
 
     // Render the noscript element
     await ((await renderToStream(contextValue.head.noScript, { userAgent: req.get('User-Agent') })) as any).pipe(res)
