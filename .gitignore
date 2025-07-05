@@ -2,3 +2,4 @@ node_modules/
 dist/
 test/bundle.js
 test/bundle.js.map
+docs/

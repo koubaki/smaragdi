@@ -18,7 +18,11 @@ const Link = ({ to, ...rest }: { to: string, [key: string]: ReactNode }): ReactE
     // Prevent default behavior
     e.preventDefault()
 
+    // @ts-expect-error Do nothing if the URI is the same
+    if (to === context?.state?.uri) return null
+
     // @ts-expect-error Change the URI
+
     context?.setState({ ...context?.state, uri: to })
   }})
 }

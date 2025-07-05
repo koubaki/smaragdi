@@ -12,7 +12,7 @@ import { ComponentType } from 'react'
  * @param {string} input - Points to the entry point of the app
  * @param {string} output - Points to the exit point of the app
  * @param {InputPluginOption} [plugins] - Custom Rollup plugin options
- * @returns {Promise<Function>} A function that provides the latest bundle
+ * @returns {Promise<{ (): Promise<ComponentType>, bundle: boolean }>} A function that provides the latest bundle
  */
 const reactBundleServer = async (input: string, output: string, plugins?: InputPluginOption): Promise<{ (): Promise<ComponentType>, bundle: boolean }> => {
   // Rollup configuration for bundling React SSR code

@@ -9,7 +9,7 @@ const { normalize } = await import(typeof window === 'undefined' ? 'path' : 'pat
 
 /**
  * Router logic for Smaragdi router
- * @param {ReactElement<Route> | ReactElement[]} children - The children
+ * @param {ReactElement<typeof Route> | ReactElement[]} children - The children
  * @returns {ReactNode | ReactNode[]} The contents of the matched route
  */
 const useRouter = (children: ReactElement<typeof Route> | ReactElement[]): ReactNode | ReactNode[] => {

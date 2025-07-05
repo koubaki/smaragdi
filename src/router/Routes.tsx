@@ -6,7 +6,7 @@ import useRouter from './useRouter.js'
 /**
  * Declarative useRoutes wrapper for Smaragdi router
  * @param {Object} props - The React props
- * @param {ReactElement<Route> | ReactElement[]} props.children - The children
+ * @param {ReactElement<typeof Route> | ReactElement[]} props.children - The children
  * @returns {ReactNode | ReactNode[]} The contents of the matched route
  */
 const Routes = ({ children }: { children: ReactElement<typeof Route> | ReactElement[] }): ReactNode | ReactNode[] => useRouter(children)

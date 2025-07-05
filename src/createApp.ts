@@ -75,7 +75,7 @@ const createApp = (env?: Environment): Application => {
 
   /**
    * React SSR
-   * @param {ComponentType} jsx - The app's JSX or a function that provides it
+   * @param {ComponentType | { (): Promise<ComponentType>, bundle: boolean }} jsx - The app's JSX or a function that provides it
    * @param {Record<string, any>} context - The default context of the app
    * @param {string} bundle - The location of the CSR bundle (empty string means no CSR)
    * @param {string} id - The ID of the app's container

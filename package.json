@@ -1,11 +1,11 @@
 {
   "name": "smaragdi",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "type": "module",
   "description": "A wrapper around Express that adds important features.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && jsdoc -c jsdoc.json",
     "test": "node test/index.js"
   },
   "repository": {
@@ -35,8 +35,12 @@
     "rollup": "^4.43.0"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.27.1",
     "@types/cookie-parser": "^1.4.9",
     "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6"
+    "@types/react-dom": "^19.1.6",
+    "jsdoc": "^4.0.4",
+    "jsdoc-babel": "^0.5.0",
+    "typescript": "^5.8.3"
   }
 }
