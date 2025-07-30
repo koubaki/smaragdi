@@ -5,16 +5,16 @@ import { watch, OutputOptions, RollupOptions, InputPluginOption } from 'rollup'
 import commonjs from '@rollup/plugin-commonjs'
 import babel from '@rollup/plugin-babel'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
-import { ComponentType } from 'react'
+import { ElementType } from 'react'
 
 /**
  * Creates a bundle for React SSR in real-time
  * @param {string} input - Points to the entry point of the app
  * @param {string} output - Points to the exit point of the app
  * @param {InputPluginOption} [plugins] - Custom Rollup plugin options
- * @returns {Promise<{ (): Promise<ComponentType>, bundle: boolean }>} A function that provides the latest bundle
+ * @returns {Promise<{ (): Promise<ElementType>, bundle: boolean }>} - A function that provides the latest bundle
  */
-const reactBundleServer = async (input: string, output: string, plugins?: InputPluginOption): Promise<{ (): Promise<ComponentType>, bundle: boolean }> => {
+const reactBundleServer = async (input: string, output: string, plugins?: InputPluginOption): Promise<{ (): Promise<ElementType>, bundle: boolean }> => {
   // Rollup configuration for bundling React SSR code
   const config: RollupOptions = {
     input,
@@ -68,7 +68,7 @@ const reactBundleServer = async (input: string, output: string, plugins?: InputP
   })
 
   // Create a function that returns the latest bundle export
-  const bundle = async (): Promise<ComponentType> => module
+  const bundle = async (): Promise<ElementType> => module
 
   // Add a property that marks it as a bundle provider
   bundle.bundle = true

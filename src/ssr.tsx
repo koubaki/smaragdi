@@ -1,28 +1,31 @@
 import { Request, Response } from 'express'
-import { ComponentType } from 'react'
+import { ElementType } from 'react'
 import { renderToStream } from 'react-streaming/server'
 
-import Context from './Context.js'
+import Context from './head/Context.js'
+import ContextInterface from './head/ContextInterface.js'
+import headGenerator from './head/headGenerator.js'
+import sanitize from './head/sanitize.js'
 
 /**
  * Private function for SSR
  * @private
- * @param {ComponentType | { (): Promise<ComponentType>, bundle: boolean }} jsx - The app's JSX or a function that provides it
+ * @param {ElementType | { (): Promise<ElementType>, bundle: boolean }} jsx - The app's JSX or a function that provides it
  * @param {Record<string, any>} context - The default context of the app
  * @param {string} bundle - The location of the CSR bundle (empty string means no CSR)
  * @param {string} id - The ID of the app's container
  * @param {Request} req - The current connection's request object
  * @param {Response} res - The current connection's request object
  */
-const ssr = async (jsx: ComponentType | { (): Promise<ComponentType>, bundle: boolean }, context: Record<string, any>, bundle: string, id: string, req: Request, res: Response): Promise<void> => {
+const ssr = async (jsx: ElementType | { (): Promise<ElementType>, bundle: boolean }, context: Record<string, any>, bundle: string, id: string, req: Request, res: Response): Promise<void> => {
   // Create a context value
-  const contextValue: Record<string, any> = { req, res, ...context }
+  const contextValue: ContextInterface = { ...context, req, res }
 
   // Create a type for the context
-  const Provider = (Context as React.Context<any>).Provider
+  const Provider = Context.Provider
 
-  // @ts-expect-error Create a JSX component
-  const Component = typeof jsx?.bundle !== 'undefined' && jsx?.bundle ? await jsx() : jsx
+  // Create a JSX component
+  const Component: ElementType = (typeof (jsx as { (): Promise<ElementType>, bundle: boolean })?.bundle !== 'undefined' && (jsx as { (): Promise<ElementType>, bundle: boolean })?.bundle ? await (jsx as () => Promise<ElementType>)() : jsx as ElementType)
 
   // Create a JSX element
   const Jsx = <Component />
@@ -36,39 +39,39 @@ const ssr = async (jsx: ComponentType | { (): Promise<ComponentType>, bundle: bo
   )
 
   // Start the wrapper of the head
-  res.write(`<!DOCTYPE ${contextValue?.head?.doctype ?? 'html'}><html${contextValue?.head?.htmlProps ? ' ' + Object.entries(contextValue.head.htmlProps).map(([key, value]) => `${(key as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}="${(value as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}"`).join(' ') : ' lang="en"'}><head${contextValue?.head?.headProps ? ' ' + Object.entries(contextValue.head.headProps).map(([key, value]) => `${(key as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}="${(value as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}"`).join(' ') : ''}>`)
+  res.write(`<!DOCTYPE html><html lang="${contextValue?.head?.lang ?? 'en-US'}"><head>${contextValue?.head ? headGenerator(contextValue.head) : ''}`)
 
   // Render the head
-  await ((await renderToStream(contextValue?.head?.headContents ? contextValue.head.headContents : <title>Smaragdi Application</title>, { userAgent: req.get('User-Agent') })) as any).pipe(res)
+  await (await renderToStream(contextValue?.head?.headContents ? contextValue.head.headContents : <title>Smaragdi Application</title>, { userAgent: req.get('User-Agent') }) as any).pipe(res)
 
   // Render the server's optional data payload
   if (contextValue?.head?.payload) {
-    res.write(`<script type="application/json" id="server-payload">${contextValue?.head?.payload ? contextValue.head.payload.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;') : ''}</script>`)
+    res.write(`<script type="application/json" id="server-payload">${contextValue?.head?.payload ? sanitize(JSON.stringify(contextValue.head.payload)) : ''}</script>`)
   }
 
   // End the wrapper of the head
-  res.write(`</head><body${contextValue?.head?.bodyProps ? ' ' + Object.entries(contextValue.head.bodyProps).map(([key, value]) => `${(key as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}="${(value as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}"`).join(' ') : ''}>`)
+  res.write(`</head><body>`)
 
   // Add a noscript element
   if (contextValue?.head?.noScript) {
     // Start the wrapper of the noscript element
-    res.write(`<noscript${contextValue?.head?.noScriptProps ? ' ' + Object.entries(contextValue.head.noScriptProps).map(([key, value]) => `${(key as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}="${(value as string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}"`).join(' ') : ''}>`)
+    res.write(`<noscript>`)
 
     // Render the noscript element
-    await ((await renderToStream(contextValue.head.noScript, { userAgent: req.get('User-Agent') })) as any).pipe(res)
+    await (await renderToStream(contextValue.head.noScript, { userAgent: req.get('User-Agent') }) as any).pipe(res)
 
     // End the wrapper of the noscript element
     res.write('</noscript>')
   }
 
   // Start the wrapper of the app
-  res.write(`<div${id ? ` id="${id.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}"` : ''}>`)
+  res.write(`<div${id ? ` id="${sanitize(id)}"` : ''}>`)
 
   // Render the app
   await result.pipe(res)
 
   // End the wrapper of the app
-  res.write(`</div>${bundle ? `<script src="${bundle.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}></script>"` : ''}</body></html>`)
+  res.write(`</div>${bundle ? `<script src="${sanitize(bundle)}></script>"` : ''}</body></html>`)
 }
 
 export default ssr

@@ -19,13 +19,18 @@ const reactBundleClient = async (entry: string, input: string, output: string, i
   // Write the entry
   await writeFile(join(import.meta.dirname, entry), `'use strict'
 
-import { normalize } from 'path'
+import { normalize } from 'path-browserify'
 
-import ${ssr ? `{ hydrateRoot } from 'react'` : `{ createRoot } from 'react'`}
+import { ${ssr ? 'createRoot' : 'hydrateRoot'} } from 'react-dom/client'
+import { createElement } from 'react'
 
-import App from ${JSON.stringify('./' + input)}
+import App from '${JSON.stringify(join(import.meta.dirname, input))}'
 
-${ssr ? `hydrateRoot(document.querySelector(${JSON.stringify(id)}))` : `createRoot(document.querySelector('${JSON.stringify(id)}')).render()`}`)
+const container = document.querySelector(${JSON.stringify(id)})
+
+if (!container) throw new Error('Container not found')
+
+${ssr ? `hydrateRoot(container, createElement(App))` : `createRoot(container).render(createElement(App))`}`)
 
   // Rollup configuration for bundling React CSR code
   const config: RollupOptions = {

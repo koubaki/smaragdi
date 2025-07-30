@@ -1,9 +1,7 @@
-import { ReactNode } from 'react'
-
-// Interface for Smaragdi router
+// Context interface for Smaragdi router
 interface ContextInterface {
+  dynamic: false,
   uri: string,
-  children: ReactNode | ReactNode[],
   params?: Partial<Record<string, string | string[]>>
 }
 

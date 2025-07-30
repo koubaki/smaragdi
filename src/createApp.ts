@@ -1,11 +1,10 @@
 import { normalize } from 'path'
 
 import express, { Application as ExpressApplication, json, Request, Response, NextFunction } from 'express'
-import { ComponentType } from 'react'
+import { ElementType } from 'react'
 import cookieParser from 'cookie-parser'
 
 import Application from './Application.js'
-import Environment from './Environment.js'
 import ssr from './ssr.js'
 
 // Extend Request interface for middleware
@@ -18,10 +17,10 @@ declare module 'express-serve-static-core' {
 
 /**
  * Function for creating a Smaragdi application
- * @param {Environment} [env] - The environment where Smaragdi is being used
- * @returns {Application} The Smaragdi app created
+ * @param {'development' | 'production' | 'test'} [env] - The environment where Smaragdi is being used
+ * @returns {Application} - The Smaragdi app created
  */
-const createApp = (env?: Environment): Application => {
+const createApp = (env?: 'development' | 'production' | 'test'): Application => {
   // Express base
   const expressApp: ExpressApplication = express()
 
@@ -29,7 +28,7 @@ const createApp = (env?: Environment): Application => {
   const app: Application = expressApp as Application
 
   // Environment setting
-  app.set('env', env ?? process.env?.NODE_ENV ?? Environment.Development)
+  app.set('env', env ?? process.env?.NODE_ENV ?? 'development')
 
   // Normalize URLs
   app.use((req: Request, res: Response, next: NextFunction) => {
@@ -75,12 +74,12 @@ const createApp = (env?: Environment): Application => {
 
   /**
    * React SSR
-   * @param {ComponentType | { (): Promise<ComponentType>, bundle: boolean }} jsx - The app's JSX or a function that provides it
+   * @param {ElementType | { (): Promise<ElementType>, bundle: boolean }} jsx - The app's JSX or a function that provides it
    * @param {Record<string, any>} context - The default context of the app
    * @param {string} bundle - The location of the CSR bundle (empty string means no CSR)
    * @param {string} id - The ID of the app's container
    */
-  app.ssr = (jsx: ComponentType | { (): Promise<ComponentType>, bundle: boolean }, context: Record<string, any>, bundle: string, id: string): void => {
+  app.ssr = (jsx: ElementType | { (): Promise<ElementType>, bundle: boolean }, context: Record<string, any>, bundle: string, id: string): void => {
     app.all(/.*/, (req, res) => ssr(jsx, context, bundle, id, req, res))
   }
 

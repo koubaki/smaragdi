@@ -1,11 +1,10 @@
-import { Dispatch, SetStateAction } from 'react'
+import { ReactNode } from 'react'
 
-import ContextInterface from './ContextInterface.js'
-
-// State wrapper for Smaragdi interface; meant for the client-side
 interface StateInterface {
-  state: ContextInterface,
-  setState: Dispatch<SetStateAction<ContextInterface>>
+  uri: string,
+  params?: Partial<Record<string, string | string[]>>,
+  route: (to: string) => void,
+  setParams: (params: Record<string, string | string[]>) => void
 }
 
 export default StateInterface
