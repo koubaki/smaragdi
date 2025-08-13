@@ -1,6 +1,6 @@
 node_modules/
 src/
-test/bundle.js
-test/entry.js
-test/public/bundle.js
+tests/
 docs/
+tsconfig.json
+typedoc.json
