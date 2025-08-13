@@ -1,21 +1,32 @@
 import { ReactNode } from 'react'
 
-import useHeadContext from './useHeadContext.js'
+import useHeadStore from './useHeadStore.js'
 
+/**
+ * Append children to the head contents
+ * @param {Record<string, any>} props - The React props
+ * @param {ReactNode} props.children - The children to append to the head contents
+ */
 const AppendHead = ({ children }: { children: ReactNode }): null => {
-  const context = useHeadContext()
+  // Use the head store
+  const store = useHeadStore()
 
-  if (!context?.head) {
-    context.head = {}
+  // If the store is not defined, throw an error
+  if (typeof store === 'undefined') throw new Error('AsyncLocalStorage store is not defined.')
+
+  // Define the head object if it doesn't exist
+  if (!store?.head) {
+    store.head = {}
   }
 
-  if (!context.head.headContents) {
-    context.head.headContents = []
+  // If headContents is not defined, define it
+  if (!store.head?.headContents) {
+    store.head.headContents = []
   }
 
-  context.head.headContents = (
+  store.head.headContents = (
     <>
-      {context.head.headContents}
+      {store.head.headContents}
       {children}
     </>
   )

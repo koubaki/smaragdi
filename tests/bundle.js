@@ -1,49 +1,130 @@
-var jsxRuntime = {exports: {}};
-
-var reactJsxRuntime_production = {};
-
-/**
- * @license React
- * react-jsx-runtime.production.js
- *
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-var hasRequiredReactJsxRuntime_production;
-
-function requireReactJsxRuntime_production () {
-	if (hasRequiredReactJsxRuntime_production) return reactJsxRuntime_production;
-	hasRequiredReactJsxRuntime_production = 1;
-	var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"),
-	  REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
-	function jsxProd(type, config, maybeKey) {
-	  var key = null;
-	  void 0 !== maybeKey && (key = "" + maybeKey);
-	  void 0 !== config.key && (key = "" + config.key);
-	  if ("key" in config) {
-	    maybeKey = {};
-	    for (var propName in config)
-	      "key" !== propName && (maybeKey[propName] = config[propName]);
-	  } else maybeKey = config;
-	  config = maybeKey.ref;
-	  return {
-	    $$typeof: REACT_ELEMENT_TYPE,
-	    type: type,
-	    key: key,
-	    ref: void 0 !== config ? config : null,
-	    props: maybeKey
-	  };
-	}
-	reactJsxRuntime_production.Fragment = REACT_FRAGMENT_TYPE;
-	reactJsxRuntime_production.jsx = jsxProd;
-	reactJsxRuntime_production.jsxs = jsxProd;
-	return reactJsxRuntime_production;
+function _arrayLikeToArray(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
+function _createForOfIteratorHelper(r, e) {
+  var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (!t) {
+    if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e) {
+      t && (r = t);
+      var n = 0,
+        F = function () {};
+      return {
+        s: F,
+        n: function () {
+          return n >= r.length ? {
+            done: true
+          } : {
+            done: false,
+            value: r[n++]
+          };
+        },
+        e: function (r) {
+          throw r;
+        },
+        f: F
+      };
+    }
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  var o,
+    a = true,
+    u = false;
+  return {
+    s: function () {
+      t = t.call(r);
+    },
+    n: function () {
+      var r = t.next();
+      return a = r.done, r;
+    },
+    e: function (r) {
+      u = true, o = r;
+    },
+    f: function () {
+      try {
+        a || null == t.return || t.return();
+      } finally {
+        if (u) throw o;
+      }
+    }
+  };
+}
+function _defineProperty(e, r, t) {
+  return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+    value: t,
+    enumerable: true,
+    configurable: true,
+    writable: true
+  }) : e[r] = t, e;
+}
+function ownKeys(e, r) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r && (o = o.filter(function (r) {
+      return Object.getOwnPropertyDescriptor(e, r).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread2(e) {
+  for (var r = 1; r < arguments.length; r++) {
+    var t = null != arguments[r] ? arguments[r] : {};
+    r % 2 ? ownKeys(Object(t), true).forEach(function (r) {
+      _defineProperty(e, r, t[r]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) {
+      Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
+    });
+  }
+  return e;
+}
+function _objectWithoutProperties(e, t) {
+  if (null == e) return {};
+  var o,
+    r,
+    i = _objectWithoutPropertiesLoose(e, t);
+  if (Object.getOwnPropertySymbols) {
+    var n = Object.getOwnPropertySymbols(e);
+    for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
+  }
+  return i;
+}
+function _objectWithoutPropertiesLoose(r, e) {
+  if (null == r) return {};
+  var t = {};
+  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
+    if (-1 !== e.indexOf(n)) continue;
+    t[n] = r[n];
+  }
+  return t;
+}
+function _toPrimitive(t, r) {
+  if ("object" != typeof t || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r);
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r ? String : Number)(t);
+}
+function _toPropertyKey(t) {
+  var i = _toPrimitive(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
+function _unsupportedIterableToArray(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
+  }
 }
 
-var reactJsxRuntime_development = {};
+function getDefaultExportFromCjs (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}
 
 var react = {exports: {}};
 
@@ -598,7 +679,7 @@ function requireReact_production () {
 	react_production.useTransition = function () {
 	  return ReactSharedInternals.H.useTransition();
 	};
-	react_production.version = "19.1.0";
+	react_production.version = "19.1.1";
 	return react_production;
 }
 
@@ -1287,15 +1368,16 @@ function requireReact_development () {
 		            return null;
 		          };
 		    deprecatedAPIs = {
-		      "react-stack-bottom-frame": function (callStackForError) {
+		      react_stack_bottom_frame: function (callStackForError) {
 		        return callStackForError();
 		      }
 		    };
 		    var specialPropKeyWarningShown, didWarnAboutOldJSXRuntime;
 		    var didWarnAboutElementRef = {};
-		    var unknownOwnerDebugStack = deprecatedAPIs[
-		      "react-stack-bottom-frame"
-		    ].bind(deprecatedAPIs, UnknownOwner)();
+		    var unknownOwnerDebugStack = deprecatedAPIs.react_stack_bottom_frame.bind(
+		      deprecatedAPIs,
+		      UnknownOwner
+		    )();
 		    var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
 		    var didWarnAboutMaps = false,
 		      userProvidedKeyEscapeRegex = /\/+/g,
@@ -1845,7 +1927,7 @@ function requireReact_development () {
 		    exports.useTransition = function () {
 		      return resolveDispatcher().useTransition();
 		    };
-		    exports.version = "19.1.0";
+		    exports.version = "19.1.1";
 		    "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ &&
 		      "function" ===
 		        typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop &&
@@ -1868,6 +1950,1164 @@ function requireReact () {
 	}
 	return react.exports;
 }
+
+var reactExports = requireReact();
+var React = /*@__PURE__*/getDefaultExportFromCjs(reactExports);
+
+const createStoreImpl = (createState) => {
+  let state;
+  const listeners = /* @__PURE__ */ new Set();
+  const setState = (partial, replace) => {
+    const nextState = typeof partial === "function" ? partial(state) : partial;
+    if (!Object.is(nextState, state)) {
+      const previousState = state;
+      state = (replace != null ? replace : typeof nextState !== "object" || nextState === null) ? nextState : Object.assign({}, state, nextState);
+      listeners.forEach((listener) => listener(state, previousState));
+    }
+  };
+  const getState = () => state;
+  const getInitialState = () => initialState;
+  const subscribe = (listener) => {
+    listeners.add(listener);
+    return () => listeners.delete(listener);
+  };
+  const api = { setState, getState, getInitialState, subscribe };
+  const initialState = state = createState(setState, getState, api);
+  return api;
+};
+const createStore = (createState) => createState ? createStoreImpl(createState) : createStoreImpl;
+
+const identity = (arg) => arg;
+function useStore(api, selector = identity) {
+  const slice = React.useSyncExternalStore(
+    api.subscribe,
+    React.useCallback(() => selector(api.getState()), [api, selector]),
+    React.useCallback(() => selector(api.getInitialState()), [api, selector])
+  );
+  React.useDebugValue(slice);
+  return slice;
+}
+const createImpl = (createState) => {
+  const api = createStore(createState);
+  const useBoundStore = (selector) => useStore(api, selector);
+  Object.assign(useBoundStore, api);
+  return useBoundStore;
+};
+const create = (createState) => createState ? createImpl(createState) : createImpl;
+
+var pathBrowserify;
+var hasRequiredPathBrowserify;
+
+function requirePathBrowserify () {
+	if (hasRequiredPathBrowserify) return pathBrowserify;
+	hasRequiredPathBrowserify = 1;
+
+	function assertPath(path) {
+	  if (typeof path !== 'string') {
+	    throw new TypeError('Path must be a string. Received ' + JSON.stringify(path));
+	  }
+	}
+
+	// Resolves . and .. elements in a path with directory names
+	function normalizeStringPosix(path, allowAboveRoot) {
+	  var res = '';
+	  var lastSegmentLength = 0;
+	  var lastSlash = -1;
+	  var dots = 0;
+	  var code;
+	  for (var i = 0; i <= path.length; ++i) {
+	    if (i < path.length)
+	      code = path.charCodeAt(i);
+	    else if (code === 47 /*/*/)
+	      break;
+	    else
+	      code = 47 /*/*/;
+	    if (code === 47 /*/*/) {
+	      if (lastSlash === i - 1 || dots === 1) ; else if (lastSlash !== i - 1 && dots === 2) {
+	        if (res.length < 2 || lastSegmentLength !== 2 || res.charCodeAt(res.length - 1) !== 46 /*.*/ || res.charCodeAt(res.length - 2) !== 46 /*.*/) {
+	          if (res.length > 2) {
+	            var lastSlashIndex = res.lastIndexOf('/');
+	            if (lastSlashIndex !== res.length - 1) {
+	              if (lastSlashIndex === -1) {
+	                res = '';
+	                lastSegmentLength = 0;
+	              } else {
+	                res = res.slice(0, lastSlashIndex);
+	                lastSegmentLength = res.length - 1 - res.lastIndexOf('/');
+	              }
+	              lastSlash = i;
+	              dots = 0;
+	              continue;
+	            }
+	          } else if (res.length === 2 || res.length === 1) {
+	            res = '';
+	            lastSegmentLength = 0;
+	            lastSlash = i;
+	            dots = 0;
+	            continue;
+	          }
+	        }
+	        if (allowAboveRoot) {
+	          if (res.length > 0)
+	            res += '/..';
+	          else
+	            res = '..';
+	          lastSegmentLength = 2;
+	        }
+	      } else {
+	        if (res.length > 0)
+	          res += '/' + path.slice(lastSlash + 1, i);
+	        else
+	          res = path.slice(lastSlash + 1, i);
+	        lastSegmentLength = i - lastSlash - 1;
+	      }
+	      lastSlash = i;
+	      dots = 0;
+	    } else if (code === 46 /*.*/ && dots !== -1) {
+	      ++dots;
+	    } else {
+	      dots = -1;
+	    }
+	  }
+	  return res;
+	}
+
+	function _format(sep, pathObject) {
+	  var dir = pathObject.dir || pathObject.root;
+	  var base = pathObject.base || (pathObject.name || '') + (pathObject.ext || '');
+	  if (!dir) {
+	    return base;
+	  }
+	  if (dir === pathObject.root) {
+	    return dir + base;
+	  }
+	  return dir + sep + base;
+	}
+
+	var posix = {
+	  // path.resolve([from ...], to)
+	  resolve: function resolve() {
+	    var resolvedPath = '';
+	    var resolvedAbsolute = false;
+	    var cwd;
+
+	    for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
+	      var path;
+	      if (i >= 0)
+	        path = arguments[i];
+	      else {
+	        if (cwd === undefined)
+	          cwd = process.cwd();
+	        path = cwd;
+	      }
+
+	      assertPath(path);
+
+	      // Skip empty entries
+	      if (path.length === 0) {
+	        continue;
+	      }
+
+	      resolvedPath = path + '/' + resolvedPath;
+	      resolvedAbsolute = path.charCodeAt(0) === 47 /*/*/;
+	    }
+
+	    // At this point the path should be resolved to a full absolute path, but
+	    // handle relative paths to be safe (might happen when process.cwd() fails)
+
+	    // Normalize the path
+	    resolvedPath = normalizeStringPosix(resolvedPath, !resolvedAbsolute);
+
+	    if (resolvedAbsolute) {
+	      if (resolvedPath.length > 0)
+	        return '/' + resolvedPath;
+	      else
+	        return '/';
+	    } else if (resolvedPath.length > 0) {
+	      return resolvedPath;
+	    } else {
+	      return '.';
+	    }
+	  },
+
+	  normalize: function normalize(path) {
+	    assertPath(path);
+
+	    if (path.length === 0) return '.';
+
+	    var isAbsolute = path.charCodeAt(0) === 47 /*/*/;
+	    var trailingSeparator = path.charCodeAt(path.length - 1) === 47 /*/*/;
+
+	    // Normalize the path
+	    path = normalizeStringPosix(path, !isAbsolute);
+
+	    if (path.length === 0 && !isAbsolute) path = '.';
+	    if (path.length > 0 && trailingSeparator) path += '/';
+
+	    if (isAbsolute) return '/' + path;
+	    return path;
+	  },
+
+	  isAbsolute: function isAbsolute(path) {
+	    assertPath(path);
+	    return path.length > 0 && path.charCodeAt(0) === 47 /*/*/;
+	  },
+
+	  join: function join() {
+	    if (arguments.length === 0)
+	      return '.';
+	    var joined;
+	    for (var i = 0; i < arguments.length; ++i) {
+	      var arg = arguments[i];
+	      assertPath(arg);
+	      if (arg.length > 0) {
+	        if (joined === undefined)
+	          joined = arg;
+	        else
+	          joined += '/' + arg;
+	      }
+	    }
+	    if (joined === undefined)
+	      return '.';
+	    return posix.normalize(joined);
+	  },
+
+	  relative: function relative(from, to) {
+	    assertPath(from);
+	    assertPath(to);
+
+	    if (from === to) return '';
+
+	    from = posix.resolve(from);
+	    to = posix.resolve(to);
+
+	    if (from === to) return '';
+
+	    // Trim any leading backslashes
+	    var fromStart = 1;
+	    for (; fromStart < from.length; ++fromStart) {
+	      if (from.charCodeAt(fromStart) !== 47 /*/*/)
+	        break;
+	    }
+	    var fromEnd = from.length;
+	    var fromLen = fromEnd - fromStart;
+
+	    // Trim any leading backslashes
+	    var toStart = 1;
+	    for (; toStart < to.length; ++toStart) {
+	      if (to.charCodeAt(toStart) !== 47 /*/*/)
+	        break;
+	    }
+	    var toEnd = to.length;
+	    var toLen = toEnd - toStart;
+
+	    // Compare paths to find the longest common path from root
+	    var length = fromLen < toLen ? fromLen : toLen;
+	    var lastCommonSep = -1;
+	    var i = 0;
+	    for (; i <= length; ++i) {
+	      if (i === length) {
+	        if (toLen > length) {
+	          if (to.charCodeAt(toStart + i) === 47 /*/*/) {
+	            // We get here if `from` is the exact base path for `to`.
+	            // For example: from='/foo/bar'; to='/foo/bar/baz'
+	            return to.slice(toStart + i + 1);
+	          } else if (i === 0) {
+	            // We get here if `from` is the root
+	            // For example: from='/'; to='/foo'
+	            return to.slice(toStart + i);
+	          }
+	        } else if (fromLen > length) {
+	          if (from.charCodeAt(fromStart + i) === 47 /*/*/) {
+	            // We get here if `to` is the exact base path for `from`.
+	            // For example: from='/foo/bar/baz'; to='/foo/bar'
+	            lastCommonSep = i;
+	          } else if (i === 0) {
+	            // We get here if `to` is the root.
+	            // For example: from='/foo'; to='/'
+	            lastCommonSep = 0;
+	          }
+	        }
+	        break;
+	      }
+	      var fromCode = from.charCodeAt(fromStart + i);
+	      var toCode = to.charCodeAt(toStart + i);
+	      if (fromCode !== toCode)
+	        break;
+	      else if (fromCode === 47 /*/*/)
+	        lastCommonSep = i;
+	    }
+
+	    var out = '';
+	    // Generate the relative path based on the path difference between `to`
+	    // and `from`
+	    for (i = fromStart + lastCommonSep + 1; i <= fromEnd; ++i) {
+	      if (i === fromEnd || from.charCodeAt(i) === 47 /*/*/) {
+	        if (out.length === 0)
+	          out += '..';
+	        else
+	          out += '/..';
+	      }
+	    }
+
+	    // Lastly, append the rest of the destination (`to`) path that comes after
+	    // the common path parts
+	    if (out.length > 0)
+	      return out + to.slice(toStart + lastCommonSep);
+	    else {
+	      toStart += lastCommonSep;
+	      if (to.charCodeAt(toStart) === 47 /*/*/)
+	        ++toStart;
+	      return to.slice(toStart);
+	    }
+	  },
+
+	  _makeLong: function _makeLong(path) {
+	    return path;
+	  },
+
+	  dirname: function dirname(path) {
+	    assertPath(path);
+	    if (path.length === 0) return '.';
+	    var code = path.charCodeAt(0);
+	    var hasRoot = code === 47 /*/*/;
+	    var end = -1;
+	    var matchedSlash = true;
+	    for (var i = path.length - 1; i >= 1; --i) {
+	      code = path.charCodeAt(i);
+	      if (code === 47 /*/*/) {
+	          if (!matchedSlash) {
+	            end = i;
+	            break;
+	          }
+	        } else {
+	        // We saw the first non-path separator
+	        matchedSlash = false;
+	      }
+	    }
+
+	    if (end === -1) return hasRoot ? '/' : '.';
+	    if (hasRoot && end === 1) return '//';
+	    return path.slice(0, end);
+	  },
+
+	  basename: function basename(path, ext) {
+	    if (ext !== undefined && typeof ext !== 'string') throw new TypeError('"ext" argument must be a string');
+	    assertPath(path);
+
+	    var start = 0;
+	    var end = -1;
+	    var matchedSlash = true;
+	    var i;
+
+	    if (ext !== undefined && ext.length > 0 && ext.length <= path.length) {
+	      if (ext.length === path.length && ext === path) return '';
+	      var extIdx = ext.length - 1;
+	      var firstNonSlashEnd = -1;
+	      for (i = path.length - 1; i >= 0; --i) {
+	        var code = path.charCodeAt(i);
+	        if (code === 47 /*/*/) {
+	            // If we reached a path separator that was not part of a set of path
+	            // separators at the end of the string, stop now
+	            if (!matchedSlash) {
+	              start = i + 1;
+	              break;
+	            }
+	          } else {
+	          if (firstNonSlashEnd === -1) {
+	            // We saw the first non-path separator, remember this index in case
+	            // we need it if the extension ends up not matching
+	            matchedSlash = false;
+	            firstNonSlashEnd = i + 1;
+	          }
+	          if (extIdx >= 0) {
+	            // Try to match the explicit extension
+	            if (code === ext.charCodeAt(extIdx)) {
+	              if (--extIdx === -1) {
+	                // We matched the extension, so mark this as the end of our path
+	                // component
+	                end = i;
+	              }
+	            } else {
+	              // Extension does not match, so our result is the entire path
+	              // component
+	              extIdx = -1;
+	              end = firstNonSlashEnd;
+	            }
+	          }
+	        }
+	      }
+
+	      if (start === end) end = firstNonSlashEnd;else if (end === -1) end = path.length;
+	      return path.slice(start, end);
+	    } else {
+	      for (i = path.length - 1; i >= 0; --i) {
+	        if (path.charCodeAt(i) === 47 /*/*/) {
+	            // If we reached a path separator that was not part of a set of path
+	            // separators at the end of the string, stop now
+	            if (!matchedSlash) {
+	              start = i + 1;
+	              break;
+	            }
+	          } else if (end === -1) {
+	          // We saw the first non-path separator, mark this as the end of our
+	          // path component
+	          matchedSlash = false;
+	          end = i + 1;
+	        }
+	      }
+
+	      if (end === -1) return '';
+	      return path.slice(start, end);
+	    }
+	  },
+
+	  extname: function extname(path) {
+	    assertPath(path);
+	    var startDot = -1;
+	    var startPart = 0;
+	    var end = -1;
+	    var matchedSlash = true;
+	    // Track the state of characters (if any) we see before our first dot and
+	    // after any path separator we find
+	    var preDotState = 0;
+	    for (var i = path.length - 1; i >= 0; --i) {
+	      var code = path.charCodeAt(i);
+	      if (code === 47 /*/*/) {
+	          // If we reached a path separator that was not part of a set of path
+	          // separators at the end of the string, stop now
+	          if (!matchedSlash) {
+	            startPart = i + 1;
+	            break;
+	          }
+	          continue;
+	        }
+	      if (end === -1) {
+	        // We saw the first non-path separator, mark this as the end of our
+	        // extension
+	        matchedSlash = false;
+	        end = i + 1;
+	      }
+	      if (code === 46 /*.*/) {
+	          // If this is our first dot, mark it as the start of our extension
+	          if (startDot === -1)
+	            startDot = i;
+	          else if (preDotState !== 1)
+	            preDotState = 1;
+	      } else if (startDot !== -1) {
+	        // We saw a non-dot and non-path separator before our dot, so we should
+	        // have a good chance at having a non-empty extension
+	        preDotState = -1;
+	      }
+	    }
+
+	    if (startDot === -1 || end === -1 ||
+	        // We saw a non-dot character immediately before the dot
+	        preDotState === 0 ||
+	        // The (right-most) trimmed path component is exactly '..'
+	        preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
+	      return '';
+	    }
+	    return path.slice(startDot, end);
+	  },
+
+	  format: function format(pathObject) {
+	    if (pathObject === null || typeof pathObject !== 'object') {
+	      throw new TypeError('The "pathObject" argument must be of type Object. Received type ' + typeof pathObject);
+	    }
+	    return _format('/', pathObject);
+	  },
+
+	  parse: function parse(path) {
+	    assertPath(path);
+
+	    var ret = { root: '', dir: '', base: '', ext: '', name: '' };
+	    if (path.length === 0) return ret;
+	    var code = path.charCodeAt(0);
+	    var isAbsolute = code === 47 /*/*/;
+	    var start;
+	    if (isAbsolute) {
+	      ret.root = '/';
+	      start = 1;
+	    } else {
+	      start = 0;
+	    }
+	    var startDot = -1;
+	    var startPart = 0;
+	    var end = -1;
+	    var matchedSlash = true;
+	    var i = path.length - 1;
+
+	    // Track the state of characters (if any) we see before our first dot and
+	    // after any path separator we find
+	    var preDotState = 0;
+
+	    // Get non-dir info
+	    for (; i >= start; --i) {
+	      code = path.charCodeAt(i);
+	      if (code === 47 /*/*/) {
+	          // If we reached a path separator that was not part of a set of path
+	          // separators at the end of the string, stop now
+	          if (!matchedSlash) {
+	            startPart = i + 1;
+	            break;
+	          }
+	          continue;
+	        }
+	      if (end === -1) {
+	        // We saw the first non-path separator, mark this as the end of our
+	        // extension
+	        matchedSlash = false;
+	        end = i + 1;
+	      }
+	      if (code === 46 /*.*/) {
+	          // If this is our first dot, mark it as the start of our extension
+	          if (startDot === -1) startDot = i;else if (preDotState !== 1) preDotState = 1;
+	        } else if (startDot !== -1) {
+	        // We saw a non-dot and non-path separator before our dot, so we should
+	        // have a good chance at having a non-empty extension
+	        preDotState = -1;
+	      }
+	    }
+
+	    if (startDot === -1 || end === -1 ||
+	    // We saw a non-dot character immediately before the dot
+	    preDotState === 0 ||
+	    // The (right-most) trimmed path component is exactly '..'
+	    preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
+	      if (end !== -1) {
+	        if (startPart === 0 && isAbsolute) ret.base = ret.name = path.slice(1, end);else ret.base = ret.name = path.slice(startPart, end);
+	      }
+	    } else {
+	      if (startPart === 0 && isAbsolute) {
+	        ret.name = path.slice(1, startDot);
+	        ret.base = path.slice(1, end);
+	      } else {
+	        ret.name = path.slice(startPart, startDot);
+	        ret.base = path.slice(startPart, end);
+	      }
+	      ret.ext = path.slice(startDot, end);
+	    }
+
+	    if (startPart > 0) ret.dir = path.slice(0, startPart - 1);else if (isAbsolute) ret.dir = '/';
+
+	    return ret;
+	  },
+
+	  sep: '/',
+	  delimiter: ':',
+	  win32: null,
+	  posix: null
+	};
+
+	posix.posix = posix;
+
+	pathBrowserify = posix;
+	return pathBrowserify;
+}
+
+var pathBrowserifyExports = requirePathBrowserify();
+
+// Zustand store for the router state in Smaragdi
+var useRouterState = create(function (set) {
+  return {
+    url: typeof location !== 'undefined' ? pathBrowserifyExports.normalize(location.pathname).replace(/\\/g, '/').replace(/\/$/, '') !== '' ? pathBrowserifyExports.normalize(location.pathname).replace(/\\/g, '/').replace(/\/$/, '') : '/' : '/',
+    params: {},
+    route: function route(to) {
+      return set(function (state) {
+        return _objectSpread2(_objectSpread2({}, state), {}, {
+          url: to
+        });
+      });
+    },
+    setParams: function setParams(params) {
+      return set(function (state) {
+        return _objectSpread2(_objectSpread2({}, state), {}, {
+          params: params
+        });
+      });
+    }
+  };
+});
+
+/**
+ * Prepares a redirection
+ * @internal
+ * @param {string} to - The new URL to navigate to
+ * @param {boolean} replace - Whether to replace the current history entry
+ * @param {boolean} refresh - Whether to force a refresh even if the URL is the same
+ */
+var useNavigate = function useNavigate(to, replace, refresh) {
+  // Use the Zustand store
+  var url = useRouterState(function (state) {
+    return state.url;
+  });
+  var route = useRouterState(function (state) {
+    return state.route;
+  });
+  return function () {
+    // Do nothing if the URL is the same
+    if (!refresh && url === to) return;
+    history[replace ? 'replaceState' : 'pushState'](null, '', to);
+    // Update the Zustand store
+    route(to);
+  };
+};
+
+var _excluded = ["to", "replace", "refresh", "onClick"];
+/**
+ * Anchors for Smaragdi router
+ * @param {Record<string, any>} props - The React props
+ * @param {string} props.to - Shorthand for href
+ * @param {boolean} props.replace - Whether to replace the current history entry
+ * @param {boolean} props.refresh - Whether to force a refresh even if the URL is the same
+ * @param {(e: any) => void} [props.onClick] - An optional onClick event handler
+ * @param {Record<string, any>} props.rest - The rest of the props
+ * @returns {ReactElement | null} - The result
+ */
+var Link = function Link(_ref) {
+  var to = _ref.to,
+    replace = _ref.replace,
+    refresh = _ref.refresh,
+    _onClick = _ref.onClick,
+    rest = _objectWithoutProperties(_ref, _excluded);
+  // Return an <a> element if called on the server
+  if (typeof window === 'undefined') return /*#__PURE__*/reactExports.createElement('a', _objectSpread2(_objectSpread2({}, rest), {}, {
+    href: to
+  }));
+  // Prepare the redirect
+  var redirect = useNavigate(to, replace, refresh);
+  return /*#__PURE__*/reactExports.createElement('a', _objectSpread2(_objectSpread2({}, rest), {}, {
+    href: to,
+    onClick: function onClick(e) {
+      e.preventDefault();
+      if (typeof _onClick === 'function') _onClick(e);
+      redirect();
+    }
+  }));
+};
+
+/**
+ * Declarative Route wrapper for Smaragdi router; does nothing on its own
+ * @param {Record<string, any>} props - The React props
+ * @param {Path} props.path - The route's pattern
+ * @param {ReactNode} props.path - What the component must show if matched and rendered
+ * @returns {ReactNode} - The children to render
+ */
+var Route = function Route(_ref) {
+  _ref.path;
+    var children = _ref.children;
+  return children;
+};
+
+var dist = {};
+
+var hasRequiredDist;
+
+function requireDist () {
+	if (hasRequiredDist) return dist;
+	hasRequiredDist = 1;
+	Object.defineProperty(dist, "__esModule", { value: true });
+	dist.TokenData = void 0;
+	dist.parse = parse;
+	dist.compile = compile;
+	dist.match = match;
+	dist.pathToRegexp = pathToRegexp;
+	dist.stringify = stringify;
+	const DEFAULT_DELIMITER = "/";
+	const NOOP_VALUE = (value) => value;
+	const ID_START = /^[$_\p{ID_Start}]$/u;
+	const ID_CONTINUE = /^[$\u200c\u200d\p{ID_Continue}]$/u;
+	const DEBUG_URL = "https://git.new/pathToRegexpError";
+	const SIMPLE_TOKENS = {
+	    // Groups.
+	    "{": "{",
+	    "}": "}",
+	    // Reserved.
+	    "(": "(",
+	    ")": ")",
+	    "[": "[",
+	    "]": "]",
+	    "+": "+",
+	    "?": "?",
+	    "!": "!",
+	};
+	/**
+	 * Escape text for stringify to path.
+	 */
+	function escapeText(str) {
+	    return str.replace(/[{}()\[\]+?!:*]/g, "\\$&");
+	}
+	/**
+	 * Escape a regular expression string.
+	 */
+	function escape(str) {
+	    return str.replace(/[.+*?^${}()[\]|/\\]/g, "\\$&");
+	}
+	/**
+	 * Tokenize input string.
+	 */
+	function* lexer(str) {
+	    const chars = [...str];
+	    let i = 0;
+	    function name() {
+	        let value = "";
+	        if (ID_START.test(chars[++i])) {
+	            value += chars[i];
+	            while (ID_CONTINUE.test(chars[++i])) {
+	                value += chars[i];
+	            }
+	        }
+	        else if (chars[i] === '"') {
+	            let pos = i;
+	            while (i < chars.length) {
+	                if (chars[++i] === '"') {
+	                    i++;
+	                    pos = 0;
+	                    break;
+	                }
+	                if (chars[i] === "\\") {
+	                    value += chars[++i];
+	                }
+	                else {
+	                    value += chars[i];
+	                }
+	            }
+	            if (pos) {
+	                throw new TypeError(`Unterminated quote at ${pos}: ${DEBUG_URL}`);
+	            }
+	        }
+	        if (!value) {
+	            throw new TypeError(`Missing parameter name at ${i}: ${DEBUG_URL}`);
+	        }
+	        return value;
+	    }
+	    while (i < chars.length) {
+	        const value = chars[i];
+	        const type = SIMPLE_TOKENS[value];
+	        if (type) {
+	            yield { type, index: i++, value };
+	        }
+	        else if (value === "\\") {
+	            yield { type: "ESCAPED", index: i++, value: chars[i++] };
+	        }
+	        else if (value === ":") {
+	            const value = name();
+	            yield { type: "PARAM", index: i, value };
+	        }
+	        else if (value === "*") {
+	            const value = name();
+	            yield { type: "WILDCARD", index: i, value };
+	        }
+	        else {
+	            yield { type: "CHAR", index: i, value: chars[i++] };
+	        }
+	    }
+	    return { type: "END", index: i, value: "" };
+	}
+	class Iter {
+	    constructor(tokens) {
+	        this.tokens = tokens;
+	    }
+	    peek() {
+	        if (!this._peek) {
+	            const next = this.tokens.next();
+	            this._peek = next.value;
+	        }
+	        return this._peek;
+	    }
+	    tryConsume(type) {
+	        const token = this.peek();
+	        if (token.type !== type)
+	            return;
+	        this._peek = undefined; // Reset after consumed.
+	        return token.value;
+	    }
+	    consume(type) {
+	        const value = this.tryConsume(type);
+	        if (value !== undefined)
+	            return value;
+	        const { type: nextType, index } = this.peek();
+	        throw new TypeError(`Unexpected ${nextType} at ${index}, expected ${type}: ${DEBUG_URL}`);
+	    }
+	    text() {
+	        let result = "";
+	        let value;
+	        while ((value = this.tryConsume("CHAR") || this.tryConsume("ESCAPED"))) {
+	            result += value;
+	        }
+	        return result;
+	    }
+	}
+	/**
+	 * Tokenized path instance.
+	 */
+	class TokenData {
+	    constructor(tokens) {
+	        this.tokens = tokens;
+	    }
+	}
+	dist.TokenData = TokenData;
+	/**
+	 * Parse a string for the raw tokens.
+	 */
+	function parse(str, options = {}) {
+	    const { encodePath = NOOP_VALUE } = options;
+	    const it = new Iter(lexer(str));
+	    function consume(endType) {
+	        const tokens = [];
+	        while (true) {
+	            const path = it.text();
+	            if (path)
+	                tokens.push({ type: "text", value: encodePath(path) });
+	            const param = it.tryConsume("PARAM");
+	            if (param) {
+	                tokens.push({
+	                    type: "param",
+	                    name: param,
+	                });
+	                continue;
+	            }
+	            const wildcard = it.tryConsume("WILDCARD");
+	            if (wildcard) {
+	                tokens.push({
+	                    type: "wildcard",
+	                    name: wildcard,
+	                });
+	                continue;
+	            }
+	            const open = it.tryConsume("{");
+	            if (open) {
+	                tokens.push({
+	                    type: "group",
+	                    tokens: consume("}"),
+	                });
+	                continue;
+	            }
+	            it.consume(endType);
+	            return tokens;
+	        }
+	    }
+	    const tokens = consume("END");
+	    return new TokenData(tokens);
+	}
+	/**
+	 * Compile a string to a template function for the path.
+	 */
+	function compile(path, options = {}) {
+	    const { encode = encodeURIComponent, delimiter = DEFAULT_DELIMITER } = options;
+	    const data = path instanceof TokenData ? path : parse(path, options);
+	    const fn = tokensToFunction(data.tokens, delimiter, encode);
+	    return function path(data = {}) {
+	        const [path, ...missing] = fn(data);
+	        if (missing.length) {
+	            throw new TypeError(`Missing parameters: ${missing.join(", ")}`);
+	        }
+	        return path;
+	    };
+	}
+	function tokensToFunction(tokens, delimiter, encode) {
+	    const encoders = tokens.map((token) => tokenToFunction(token, delimiter, encode));
+	    return (data) => {
+	        const result = [""];
+	        for (const encoder of encoders) {
+	            const [value, ...extras] = encoder(data);
+	            result[0] += value;
+	            result.push(...extras);
+	        }
+	        return result;
+	    };
+	}
+	/**
+	 * Convert a single token into a path building function.
+	 */
+	function tokenToFunction(token, delimiter, encode) {
+	    if (token.type === "text")
+	        return () => [token.value];
+	    if (token.type === "group") {
+	        const fn = tokensToFunction(token.tokens, delimiter, encode);
+	        return (data) => {
+	            const [value, ...missing] = fn(data);
+	            if (!missing.length)
+	                return [value];
+	            return [""];
+	        };
+	    }
+	    const encodeValue = encode || NOOP_VALUE;
+	    if (token.type === "wildcard" && encode !== false) {
+	        return (data) => {
+	            const value = data[token.name];
+	            if (value == null)
+	                return ["", token.name];
+	            if (!Array.isArray(value) || value.length === 0) {
+	                throw new TypeError(`Expected "${token.name}" to be a non-empty array`);
+	            }
+	            return [
+	                value
+	                    .map((value, index) => {
+	                    if (typeof value !== "string") {
+	                        throw new TypeError(`Expected "${token.name}/${index}" to be a string`);
+	                    }
+	                    return encodeValue(value);
+	                })
+	                    .join(delimiter),
+	            ];
+	        };
+	    }
+	    return (data) => {
+	        const value = data[token.name];
+	        if (value == null)
+	            return ["", token.name];
+	        if (typeof value !== "string") {
+	            throw new TypeError(`Expected "${token.name}" to be a string`);
+	        }
+	        return [encodeValue(value)];
+	    };
+	}
+	/**
+	 * Transform a path into a match function.
+	 */
+	function match(path, options = {}) {
+	    const { decode = decodeURIComponent, delimiter = DEFAULT_DELIMITER } = options;
+	    const { regexp, keys } = pathToRegexp(path, options);
+	    const decoders = keys.map((key) => {
+	        if (decode === false)
+	            return NOOP_VALUE;
+	        if (key.type === "param")
+	            return decode;
+	        return (value) => value.split(delimiter).map(decode);
+	    });
+	    return function match(input) {
+	        const m = regexp.exec(input);
+	        if (!m)
+	            return false;
+	        const path = m[0];
+	        const params = Object.create(null);
+	        for (let i = 1; i < m.length; i++) {
+	            if (m[i] === undefined)
+	                continue;
+	            const key = keys[i - 1];
+	            const decoder = decoders[i - 1];
+	            params[key.name] = decoder(m[i]);
+	        }
+	        return { path, params };
+	    };
+	}
+	function pathToRegexp(path, options = {}) {
+	    const { delimiter = DEFAULT_DELIMITER, end = true, sensitive = false, trailing = true, } = options;
+	    const keys = [];
+	    const sources = [];
+	    const flags = sensitive ? "" : "i";
+	    const paths = Array.isArray(path) ? path : [path];
+	    const items = paths.map((path) => path instanceof TokenData ? path : parse(path, options));
+	    for (const { tokens } of items) {
+	        for (const seq of flatten(tokens, 0, [])) {
+	            const regexp = sequenceToRegExp(seq, delimiter, keys);
+	            sources.push(regexp);
+	        }
+	    }
+	    let pattern = `^(?:${sources.join("|")})`;
+	    if (trailing)
+	        pattern += `(?:${escape(delimiter)}$)?`;
+	    pattern += end ? "$" : `(?=${escape(delimiter)}|$)`;
+	    const regexp = new RegExp(pattern, flags);
+	    return { regexp, keys };
+	}
+	/**
+	 * Generate a flat list of sequence tokens from the given tokens.
+	 */
+	function* flatten(tokens, index, init) {
+	    if (index === tokens.length) {
+	        return yield init;
+	    }
+	    const token = tokens[index];
+	    if (token.type === "group") {
+	        const fork = init.slice();
+	        for (const seq of flatten(token.tokens, 0, fork)) {
+	            yield* flatten(tokens, index + 1, seq);
+	        }
+	    }
+	    else {
+	        init.push(token);
+	    }
+	    yield* flatten(tokens, index + 1, init);
+	}
+	/**
+	 * Transform a flat sequence of tokens into a regular expression.
+	 */
+	function sequenceToRegExp(tokens, delimiter, keys) {
+	    let result = "";
+	    let backtrack = "";
+	    let isSafeSegmentParam = true;
+	    for (let i = 0; i < tokens.length; i++) {
+	        const token = tokens[i];
+	        if (token.type === "text") {
+	            result += escape(token.value);
+	            backtrack += token.value;
+	            isSafeSegmentParam || (isSafeSegmentParam = token.value.includes(delimiter));
+	            continue;
+	        }
+	        if (token.type === "param" || token.type === "wildcard") {
+	            if (!isSafeSegmentParam && !backtrack) {
+	                throw new TypeError(`Missing text after "${token.name}": ${DEBUG_URL}`);
+	            }
+	            if (token.type === "param") {
+	                result += `(${negate(delimiter, isSafeSegmentParam ? "" : backtrack)}+)`;
+	            }
+	            else {
+	                result += `([\\s\\S]+)`;
+	            }
+	            keys.push(token);
+	            backtrack = "";
+	            isSafeSegmentParam = false;
+	            continue;
+	        }
+	    }
+	    return result;
+	}
+	function negate(delimiter, backtrack) {
+	    if (backtrack.length < 2) {
+	        if (delimiter.length < 2)
+	            return `[^${escape(delimiter + backtrack)}]`;
+	        return `(?:(?!${escape(delimiter)})[^${escape(backtrack)}])`;
+	    }
+	    if (delimiter.length < 2) {
+	        return `(?:(?!${escape(backtrack)})[^${escape(delimiter)}])`;
+	    }
+	    return `(?:(?!${escape(backtrack)}|${escape(delimiter)})[\\s\\S])`;
+	}
+	/**
+	 * Stringify token data into a path string.
+	 */
+	function stringify(data) {
+	    return data.tokens
+	        .map(function stringifyToken(token, index, tokens) {
+	        if (token.type === "text")
+	            return escapeText(token.value);
+	        if (token.type === "group") {
+	            return `{${token.tokens.map(stringifyToken).join("")}}`;
+	        }
+	        const isSafe = isNameSafe(token.name) && isNextNameSafe(tokens[index + 1]);
+	        const key = isSafe ? token.name : JSON.stringify(token.name);
+	        if (token.type === "param")
+	            return `:${key}`;
+	        if (token.type === "wildcard")
+	            return `*${key}`;
+	        throw new TypeError(`Unexpected token: ${token}`);
+	    })
+	        .join("");
+	}
+	function isNameSafe(name) {
+	    const [first, ...rest] = name;
+	    if (!ID_START.test(first))
+	        return false;
+	    return rest.every((char) => ID_CONTINUE.test(char));
+	}
+	function isNextNameSafe(token) {
+	    if ((token === null || token === void 0 ? void 0 : token.type) !== "text")
+	        return true;
+	    return !ID_CONTINUE.test(token.value[0]);
+	}
+	
+	return dist;
+}
+
+var distExports = requireDist();
+
+/**
+ * Router logic for Smaragdi router
+ * @param props - The React props
+ * @param {ReactElement<{ path: Path, children: ReactNode }, typeof Route> | ReactElement<{ path: Path, children: ReactNode }, typeof Route>[]} props.children - The children
+ * @returns {ReactNode} - The contents of the matched route
+ */
+var Routes = function Routes(_ref) {
+  var children = _ref.children;
+  // Use the store
+  var store = als.getStore();
+  // If the store is not defined, throw an error
+  if (typeof store === 'undefined') throw new Error('AsyncLocalStorage store is not defined.');
+  // Loop through the routes
+  if (children instanceof Array) {
+    var _iterator = _createForOfIteratorHelper(children),
+      _step;
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var child = _step.value;
+        // Create a function to match the route and match it
+        var matched = distExports.match(child.props.path)(store.routerContext.url);
+        // Check if the route is matched
+        if (matched) {
+          // Add the parameters to the store
+          store.routerContext.params = matched.params;
+          // Return the route
+          return child;
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+  } else {
+    // Create a function to match the route and match it
+    var _matched = distExports.match(children.props.path)(store.routerContext.url);
+    // Check if the route is matched
+    if (_matched) {
+      // Add the parameters to the store
+      store.routerContext.params = _matched.params;
+      // Return the route
+      return children;
+    }
+    return null;
+  }
+};
+
+var jsxRuntime = {exports: {}};
+
+var reactJsxRuntime_production = {};
+
+/**
+ * @license React
+ * react-jsx-runtime.production.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+var hasRequiredReactJsxRuntime_production;
+
+function requireReactJsxRuntime_production () {
+	if (hasRequiredReactJsxRuntime_production) return reactJsxRuntime_production;
+	hasRequiredReactJsxRuntime_production = 1;
+	var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"),
+	  REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
+	function jsxProd(type, config, maybeKey) {
+	  var key = null;
+	  void 0 !== maybeKey && (key = "" + maybeKey);
+	  void 0 !== config.key && (key = "" + config.key);
+	  if ("key" in config) {
+	    maybeKey = {};
+	    for (var propName in config)
+	      "key" !== propName && (maybeKey[propName] = config[propName]);
+	  } else maybeKey = config;
+	  config = maybeKey.ref;
+	  return {
+	    $$typeof: REACT_ELEMENT_TYPE,
+	    type: type,
+	    key: key,
+	    ref: void 0 !== config ? config : null,
+	    props: maybeKey
+	  };
+	}
+	reactJsxRuntime_production.Fragment = REACT_FRAGMENT_TYPE;
+	reactJsxRuntime_production.jsx = jsxProd;
+	reactJsxRuntime_production.jsxs = jsxProd;
+	return reactJsxRuntime_production;
+}
+
+var reactJsxRuntime_development = {};
 
 /**
  * @license React
@@ -2184,13 +3424,13 @@ function requireReactJsxRuntime_development () {
 	            return null;
 	          };
 	    React = {
-	      "react-stack-bottom-frame": function (callStackForError) {
+	      react_stack_bottom_frame: function (callStackForError) {
 	        return callStackForError();
 	      }
 	    };
 	    var specialPropKeyWarningShown;
 	    var didWarnAboutElementRef = {};
-	    var unknownOwnerDebugStack = React["react-stack-bottom-frame"].bind(
+	    var unknownOwnerDebugStack = React.react_stack_bottom_frame.bind(
 	      React,
 	      UnknownOwner
 	    )();
@@ -2249,14 +3489,26 @@ function requireJsxRuntime () {
 
 var jsxRuntimeExports = requireJsxRuntime();
 
-// Test app for Smaragdi
 var App = function App() {
-  // Create a random number
-  var random = Math.floor(Math.random() * 100);
-  return /*#__PURE__*/jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {
-    children: random
+  return /*#__PURE__*/jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    children: [/*#__PURE__*/jsxRuntimeExports.jsx(Link, {
+      to: "/",
+      children: "Say Hello"
+    }), /*#__PURE__*/jsxRuntimeExports.jsx("br", {}), /*#__PURE__*/jsxRuntimeExports.jsx(Link, {
+      to: "/about",
+      children: "Say Hi"
+    }), /*#__PURE__*/jsxRuntimeExports.jsx("p", {
+      children: /*#__PURE__*/jsxRuntimeExports.jsxs(Routes, {
+        children: [/*#__PURE__*/jsxRuntimeExports.jsx(Route, {
+          path: "/",
+          children: "Hello"
+        }), /*#__PURE__*/jsxRuntimeExports.jsx(Route, {
+          path: "/about",
+          children: "Hi"
+        })]
+      })
+    })]
   });
 };
 
 export { App as default };
-//# sourceMappingURL=bundle.js.map

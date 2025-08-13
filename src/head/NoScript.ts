@@ -1,19 +1,26 @@
 import { ReactNode } from 'react'
 
-import useHeadContext from './useHeadContext.js'
+import useHeadStore from './useHeadStore.js'
 
+/**
+ * Component for adding a NoScript tag in the head
+ * @param {Record<string, any>} props - The React props
+ * @param {ReactNode} props.children - The children to be wrapped in the NoScript tag
+ */
 const NoScript = ({ children }: { children: ReactNode }): null => {
-  const context = useHeadContext()
+  // Use the head store
+  const store = useHeadStore()
 
-  if (!context?.head) {
-    context.head = {}
+  // If the store is not defined, throw an error
+  if (typeof store === 'undefined') throw new Error('AsyncLocalStorage store is not defined.')
+
+  // Define the head object if it doesn't exist
+  if (!store?.head) {
+    store.head = {}
   }
 
-  if (!context.head.noScript) {
-    context.head.noScript = []
-  }
-
-  context.head.noScript = children
+  // Set the noScript property with the provided children
+  store.head.noScript = children
 
   return null
 }

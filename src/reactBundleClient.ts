@@ -1,10 +1,10 @@
-import { join } from 'path'
 import { writeFile } from 'fs/promises'
 
 import { watch, OutputOptions, RollupOptions, InputPluginOption } from 'rollup'
 import commonjs from '@rollup/plugin-commonjs'
 import babel from '@rollup/plugin-babel'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
+import replace from '@rollup/plugin-replace'
 
 /**
  * Creates a bundle for React CSR in real-time
@@ -12,25 +12,19 @@ import { nodeResolve } from '@rollup/plugin-node-resolve'
  * @param {string} input - Points to the entry point of the app
  * @param {string} output - Points to the exit point of the app
  * @param {InputPluginOption} [plugins] - Custom Rollup plugin options
- * @param {string} id - The ID of the app's container
- * @param {boolean} ssr - Whether SSR is done or not
  */
-const reactBundleClient = async (entry: string, input: string, output: string, id: string, ssr: boolean, plugins?: InputPluginOption): Promise<void> => {
+const reactBundleClient = async (entry: string, input: string, output: string, plugins?: InputPluginOption): Promise<void> => {
   // Write the entry
-  await writeFile(join(import.meta.dirname, entry), `'use strict'
-
-import { normalize } from 'path-browserify'
-
-import { ${ssr ? 'createRoot' : 'hydrateRoot'} } from 'react-dom/client'
+  await writeFile(entry, `import { hydrateRoot } from 'react-dom/client'
 import { createElement } from 'react'
 
-import App from '${JSON.stringify(join(import.meta.dirname, input))}'
+import App from ${JSON.stringify(input)}
 
-const container = document.querySelector(${JSON.stringify(id)})
+const container = document.querySelector(${JSON.stringify('#app')})
 
 if (!container) throw new Error('Container not found')
 
-${ssr ? `hydrateRoot(container, createElement(App))` : `createRoot(container).render(createElement(App))`}`)
+hydrateRoot(container, createElement(App))`)
 
   // Rollup configuration for bundling React CSR code
   const config: RollupOptions = {
@@ -38,7 +32,12 @@ ${ssr ? `hydrateRoot(container, createElement(App))` : `createRoot(container).re
     plugins: plugins ?? [
       commonjs(),
       nodeResolve({
-        preferBuiltins: true,
+        browser: true,
+        exportConditions: ['browser']
+      }),
+      replace({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV ?? 'development'),
+        preventAssignment: true
       }),
       babel({
         babelHelpers: 'bundled',
@@ -51,9 +50,7 @@ ${ssr ? `hydrateRoot(container, createElement(App))` : `createRoot(container).re
     ],
     output: {
       file: output,
-      format: 'es',
-      exports: 'default',
-      sourcemap: true
+      format: 'es'
     } as OutputOptions
   }
 

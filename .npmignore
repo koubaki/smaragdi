@@ -1,5 +1,6 @@
 node_modules/
 src/
 test/bundle.js
-test/bundle.js.map
+test/entry.js
+test/public/bundle.js
 docs/

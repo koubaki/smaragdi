@@ -1,5 +1,4 @@
 import { pathToFileURL } from 'url'
-import { normalize } from 'path'
 
 import { watch, OutputOptions, RollupOptions, InputPluginOption } from 'rollup'
 import commonjs from '@rollup/plugin-commonjs'
@@ -21,7 +20,8 @@ const reactBundleServer = async (input: string, output: string, plugins?: InputP
     plugins: plugins ?? [
       commonjs(),
       nodeResolve({
-        preferBuiltins: true,
+        browser: false,
+        exportConditions: ['node']
       }),
       babel({
         babelHelpers: 'bundled',
@@ -35,8 +35,7 @@ const reactBundleServer = async (input: string, output: string, plugins?: InputP
     output: {
       file: output,
       format: 'es',
-      exports: 'default',
-      sourcemap: true
+      exports: 'default'
     } as OutputOptions
   }
 
@@ -50,20 +49,20 @@ const reactBundleServer = async (input: string, output: string, plugins?: InputP
   const watcher = watch(config)
 
   // Handle events from the watcher
-  watcher.on('event', async event => {
-    if (event.code === 'START') {
+  watcher.on('event', async e => {
+    if (e.code === 'START') {
       console.info('Bundling...')
-    } else if (event.code === 'END') {
+    } else if (e.code === 'END') {
       times++
       try {
-        const imported = await import(`${pathToFileURL(normalize(output)).href}?cache-bust=${times}`)
+        const imported = await import(`${pathToFileURL(output).href}?cache-bust=${times}`)
         module = imported.default
         console.info('Bundle created successfully!')
       } catch (err) {
         console.error('Error loading updated bundle:', err)
       }
-    } else if (event.code === 'ERROR') {
-      console.error('Error during bundling:', event.error)
+    } else if (e.code === 'ERROR') {
+      console.error('Error during bundling:', e.error)
     }
   })
 

@@ -1,0 +1,9 @@
+{
+  "entryPoints": ["src"],
+  "out": "docs",
+  "externalSymbolLinkMappings": {
+    "@types/node": {
+      "EventEmitter.defaultMaxListeners": "#"
+    }
+  }
+}

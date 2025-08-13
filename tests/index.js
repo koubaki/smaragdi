@@ -1,15 +1,21 @@
 import { join } from 'path'
 
-import { reactBundleServer, createApp } from '../dist/index.js'
+import { static as ztatic } from 'express'
+
+import { reactBundleServer, reactBundleClient, createApp } from '#self'
 
 // Create a bundle
-const bundle = await reactBundleServer(join(import.meta.dirname, 'App.jsx'), join(import.meta.dirname, 'bundle.js'))
+const serverBundle = await reactBundleServer(join(import.meta.dirname, 'App.jsx'), join(import.meta.dirname, 'bundle.js'))
+await reactBundleClient(join(import.meta.dirname, 'entry.js'), join(import.meta.dirname, 'App.jsx'), join(import.meta.dirname, '/public/bundle.js'))
 
 // Create the app
 const app = createApp('test')
 
+// Serve static files
+app.use(ztatic(join(import.meta.dirname, 'public')))
+
 // Set up SSR
-app.ssr(bundle, {}, '', '')
+app.ssr(serverBundle, {}, '/bundle.js')
 
 // Start the server
 app.listen(3000, () => {

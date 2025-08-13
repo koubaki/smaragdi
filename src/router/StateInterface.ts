@@ -1,10 +1,9 @@
-import { ReactNode } from 'react'
-
+// Client-side Zustand interface for the router state
 interface StateInterface {
-  uri: string,
+  url: string,
   params?: Partial<Record<string, string | string[]>>,
-  route: (to: string) => void,
-  setParams: (params: Record<string, string | string[]>) => void
+  route(to: string): void,
+  setParams(params: Partial<Record<string, string | string[]>>): void
 }
 
 export default StateInterface

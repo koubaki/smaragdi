@@ -1,9 +1,11 @@
 import { Request, Response } from 'express'
 import { ReactNode } from 'react'
 
-import JSONType from './JSONType.js'
+// Set the type for JSON
+type JSONType = string | number | boolean | null | { [key: string]: JSONType } | JSONType[]
 
-interface ContextInterface {
+// Interface for the head store
+interface StoreInterface {
   req: Request,
   res: Response,
   head?: {
@@ -26,4 +28,4 @@ interface ContextInterface {
   [key: string]: any
 }
 
-export default ContextInterface
+export default StoreInterface

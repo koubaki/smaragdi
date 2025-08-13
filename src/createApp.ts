@@ -28,7 +28,7 @@ const createApp = (env?: 'development' | 'production' | 'test'): Application => 
   const app: Application = expressApp as Application
 
   // Environment setting
-  app.set('env', env ?? process.env?.NODE_ENV ?? 'development')
+  app.set('env', env ?? process.env.NODE_ENV ?? 'development')
 
   // Normalize URLs
   app.use((req: Request, res: Response, next: NextFunction) => {
@@ -37,24 +37,20 @@ const createApp = (env?: 'development' | 'production' | 'test'): Application => 
     req.unNormalizedOriginalUrl = req.originalUrl
 
     // Normalize URL
-    req.url = normalize(req.url).replace(/\\/g, '/').replace(/\/$/, '')
+    req.url = (normalize(req.url).replace(/\\/g, '/').replace(/\/$/, '') !== '' ? normalize(req.url).replace(/\\/g, '/').replace(/\/$/, '') : '/')
     if (req.url === '') req.url = '/'
 
     // Normalize original URL
-    req.originalUrl = normalize(req.originalUrl).replace(/\\/g, '/').replace(/\/$/, '')
+    req.originalUrl = (normalize(req.originalUrl).replace(/\\/g, '/').replace(/\/$/, '') !== '' ? normalize(req.originalUrl).replace(/\\/g, '/').replace(/\/$/, '') : '/')
     if (req.originalUrl === '') req.originalUrl = '/'
 
     next()
   })
 
-
   // Default JSON middleware
   app.jsonMiddleware = json()
 
-  /**
-   * Configuration for JSON middleware
-   * @param {object} options - The JSON middleware options
-   */
+  // Configuration for JSON middleware
   app.json = (options: object): void => {
     app.jsonMiddleware = json(options)
   }
@@ -72,15 +68,9 @@ const createApp = (env?: 'development' | 'production' | 'test'): Application => 
     next()
   })
 
-  /**
-   * React SSR
-   * @param {ElementType | { (): Promise<ElementType>, bundle: boolean }} jsx - The app's JSX or a function that provides it
-   * @param {Record<string, any>} context - The default context of the app
-   * @param {string} bundle - The location of the CSR bundle (empty string means no CSR)
-   * @param {string} id - The ID of the app's container
-   */
-  app.ssr = (jsx: ElementType | { (): Promise<ElementType>, bundle: boolean }, context: Record<string, any>, bundle: string, id: string): void => {
-    app.all(/.*/, (req, res) => ssr(jsx, context, bundle, id, req, res))
+  // React SSR
+  app.ssr = (jsx: ElementType | { (): Promise<ElementType>, bundle: boolean }, store: Record<string, any>, bundle: string): void => {
+    app.all(/.*/, (req, res) => ssr(jsx, store, bundle, req, res))
   }
 
   return app
