@@ -3,4 +3,3 @@ dist/
 tests/bundle.js
 tests/entry.js
 tests/public/bundle.js
-!tests/public

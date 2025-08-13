@@ -1,6 +1,6 @@
 {
   "name": "smaragdi",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "type": "module",
   "description": "A JavaScript framework with features like routing and SSR.",
   "scripts": {
