@@ -1,4 +1,4 @@
-import { createElement, ReactNode, ReactElement } from 'react'
+import { createElement, ReactElement } from 'react'
 
 import useNavigate from './useNavigate.js'
 

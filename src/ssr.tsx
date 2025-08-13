@@ -45,14 +45,14 @@ const ssr = (jsx: ElementType | { (): Promise<ElementType>, bundle: boolean }, s
     res.setHeader('Content-Type', 'text/html')
 
     // Start the wrapper of the head
-    res.write(`<!DOCTYPE html><html lang="${ztore.ssrContext?.head?.lang ?? 'en-US'}"><head>${headGenerator(ztore.ssrContext.head)}`)
+    res.write(`<!DOCTYPE html><html lang="${ztore.ssrContext?.head?.lang ?? 'en'}"><head>${headGenerator(ztore.ssrContext.head)}`)
 
     // Render the head
-    await(await renderToStream(ztore.ssrContext?.head?.headContents ?? <></>, { userAgent: req.get('User-Agent') }) as any).pipe(res)
+    await(await renderToStream(ztore.ssrContext?.head?.headContents ?? null, { userAgent: req.get('User-Agent') }) as any).pipe(res)
 
     // Render the server's optional data payload
     if (ztore.ssrContext?.head?.payload) {
-      res.write(`<script type="application/json" id="server-payload">${ztore.ssrContext?.head?.payload ? sanitize(JSON.stringify(ztore.ssrContext.head.payload)) : ''}</script>`)
+      res.write(ztore.ssrContext?.head?.payload ? `<script type="application/json" id="server-payload">${sanitize(JSON.stringify(ztore.ssrContext.head.payload))}</script>` : '')
     }
 
     // End the wrapper of the head

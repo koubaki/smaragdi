@@ -1,5 +1,5 @@
 node_modules/
 dist/
-test/bundle.js
-test/entry.js
-test/public/bundle.js
+tests/bundle.js
+tests/entry.js
+tests/public/bundle.js
